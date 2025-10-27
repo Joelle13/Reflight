@@ -22,7 +22,8 @@ public class AirlineServiceImpl implements AirlineService {
 
     @Override
     public Airline createAirline(AirlineDto airlineDto) {
-        Airline airline = AirlineDto.mapToEntity(airlineDto);
+        Airline airline = new Airline();
+        airline.setName(airlineDto.getName());
         return airlineRepository.save(airline);
     }
 }

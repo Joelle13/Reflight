@@ -17,9 +17,4 @@ public class AirlineDto {
                 .build();
     }
 
-    public static Airline mapToEntity(AirlineDto airlineDto) {
-        Airline airline = new Airline();
-        airline.setName(airlineDto.getName());
-        return airline;
-    }
 }
