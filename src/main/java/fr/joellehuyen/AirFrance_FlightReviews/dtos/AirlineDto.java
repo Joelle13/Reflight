@@ -1,0 +1,25 @@
+package fr.joellehuyen.AirFrance_FlightReviews.dtos;
+
+import fr.joellehuyen.AirFrance_FlightReviews.models.Airline;
+import lombok.Builder;
+import lombok.Getter;
+
+@Getter
+@Builder
+public class AirlineDto {
+    private String id;
+    private String name;
+
+    public static AirlineDto mapToDTO(Airline airline) {
+        return AirlineDto.builder()
+                .id(airline.getId())
+                .name(airline.getName())
+                .build();
+    }
+
+    public static Airline mapToEntity(AirlineDto airlineDto) {
+        Airline airline = new Airline();
+        airline.setName(airlineDto.getName());
+        return airline;
+    }
+}
