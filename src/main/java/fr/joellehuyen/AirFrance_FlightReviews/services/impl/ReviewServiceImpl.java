@@ -51,33 +51,34 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> getReviewsByDate(LocalDate date) {
-        return reviewRepository.findByReviewDate(date);
+    public List<Review> searchReviews(LocalDate date, Integer rating, String airlineName, String status, String flightId, String keyword) {
+        ReviewStatus reviewStatus = null;
+        if (status != null) {
+            reviewStatus = ReviewStatus.valueOf(status.toUpperCase());
+        }
+        return reviewRepository.searchReviews(
+                date,
+                rating,
+                toUpperOrNull(airlineName),
+                reviewStatus,
+                toUpperOrNull(flightId),
+                keyword
+        );
     }
 
     @Override
-    public List<Review> getReviewsByRating(int rating) {
-        return reviewRepository.findByRating(rating);
+    public Review getReviewById(String id) {
+        return reviewRepository.findById(id)
+                .orElseThrow(() -> new ReviewNotFoundException(id));
     }
 
     @Override
-    public List<Review> getReviewsByAirline(String airlineName) {
-       return reviewRepository.findByFlight_Airline_Name(airlineName);
+    public void deleteReviewById(String id) {
+        getReviewById(id);
+        reviewRepository.deleteById(id);
     }
 
-    @Override
-    public List<Review> getReviewsByStatus(String status) {
-        ReviewStatus reviewStatus = ReviewStatus.valueOf(status.toUpperCase());
-        return reviewRepository.findByStatus(reviewStatus);
-    }
-
-    @Override
-    public List<Review> getReviewsByFlightId(String flightId) {
-        return reviewRepository.findByFlight_Id(flightId);
-    }
-
-    @Override
-    public List<Review> getReviewsByKeyword(String keyword) {
-        return reviewRepository.findByKeywordInComments(keyword);
+    private String toUpperOrNull(String value) {
+        return (value == null || value.isBlank()) ? null : value.trim().toUpperCase();
     }
 }

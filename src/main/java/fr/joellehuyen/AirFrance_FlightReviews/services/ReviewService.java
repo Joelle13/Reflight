@@ -13,15 +13,9 @@ public interface ReviewService {
 
     Review answerReview(String id, String answer);
 
-    List<Review> getReviewsByDate(LocalDate date);
+    List<Review> searchReviews(LocalDate date, Integer rating, String airlineName, String status, String flightId, String keyword);
 
-    List<Review> getReviewsByRating(int rating);
+    Review getReviewById(String id);
 
-    List<Review> getReviewsByAirline(String airlineName);
-
-    List<Review> getReviewsByStatus(String status);
-
-    List<Review> getReviewsByFlightId(String flightId);
-
-    List<Review> getReviewsByKeyword(String keyword);
+    void deleteReviewById(String id);
 }

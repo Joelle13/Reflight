@@ -11,19 +11,18 @@ import java.util.List;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, String> {
-    @Query("SELECT r FROM Review r WHERE DATE(r.reviewDate) = :date")
-    List<Review> findByReviewDate(LocalDate date);
 
-    @Query("SELECT r FROM Review r WHERE r.rating <= :rating")
-    List<Review> findByRating(int rating);
-
-    @Query("SELECT r FROM Review r WHERE r.flight.airline.name = :airlineName")
-    List<Review> findByFlight_Airline_Name(String airlineName);
-
-    List<Review> findByStatus(ReviewStatus reviewStatus);
-
-    List<Review> findByFlight_Id(String flightId);
-
-    @Query("SELECT r FROM Review r WHERE r.comments LIKE %:keyword%")
-    List<Review> findByKeywordInComments(String keyword);
+    @Query("""
+SELECT r
+FROM Review r
+JOIN r.flight f
+JOIN f.airline a
+WHERE r.reviewDate = COALESCE(:date, r.reviewDate)
+  AND r.rating     = COALESCE(:rating, r.rating)
+  AND a.name = COALESCE(:airlineName, a.name)
+  AND r.status      = COALESCE(:status, r.status)
+  AND f.id          = COALESCE(:flightId, f.id)
+  AND LOWER(r.comments) LIKE COALESCE(CONCAT('%', LOWER(:keyword), '%'), LOWER(r.comments))
+""")
+    List<Review> searchReviews(LocalDate date, Integer rating, String airlineName, ReviewStatus status, String flightId, String keyword);
 }

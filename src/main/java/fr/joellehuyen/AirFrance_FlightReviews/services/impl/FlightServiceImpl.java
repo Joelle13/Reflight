@@ -12,7 +12,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -39,15 +38,8 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public List<Flight> searchFlights(LocalDate date, String airline, String number) {
-        String airlineToUpper = airline;
-        String numberToUpper = number;
-        if(airline != null){
-            airlineToUpper = airline.toUpperCase();
-        }
-        if(number != null){
-            numberToUpper = number.toUpperCase();
-        }
-
+        String airlineToUpper = toUpperOrNull(airline);
+        String numberToUpper = toUpperOrNull(number);
         return flightRepository.searchFlights(date, airlineToUpper, numberToUpper);
     }
 
@@ -55,5 +47,9 @@ public class FlightServiceImpl implements FlightService {
     public Flight getFlightByFlightNumber(String flightNumber) {
         return flightRepository.findById(flightNumber.toUpperCase())
                 .orElseThrow(() -> new FlightNotFoundException(flightNumber));
+    }
+
+    private String toUpperOrNull(String value) {
+        return (value == null || value.isBlank()) ? null : value.trim().toUpperCase();
     }
 }
