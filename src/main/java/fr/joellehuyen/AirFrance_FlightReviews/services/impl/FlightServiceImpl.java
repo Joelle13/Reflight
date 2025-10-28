@@ -9,6 +9,7 @@ import fr.joellehuyen.AirFrance_FlightReviews.repositories.AirlineRepository;
 import fr.joellehuyen.AirFrance_FlightReviews.repositories.FlightRepository;
 import fr.joellehuyen.AirFrance_FlightReviews.services.FlightService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -47,6 +48,22 @@ public class FlightServiceImpl implements FlightService {
     public Flight getFlightByFlightNumber(String flightNumber) {
         return flightRepository.findById(flightNumber.toUpperCase())
                 .orElseThrow(() -> new FlightNotFoundException(flightNumber));
+    }
+
+    @Override
+    public List<Flight> getSortedFlights(String sortBy, boolean desc) {
+        Sort sort = buildSort(sortBy, desc);
+        return flightRepository.findAll(sort);
+    }
+
+    private Sort buildSort(String sortBy, boolean desc) {
+        Sort.Direction direction = desc ? Sort.Direction.DESC : Sort.Direction.ASC;
+        return switch (sortBy) {
+            case "date" -> Sort.by(direction, "departureDate");
+            case "airline" -> Sort.by(direction, "airline.name");
+            case "flightNumber" -> Sort.by(direction, "id");
+            default -> Sort.by(Sort.Direction.ASC, "departureDate");
+        };
     }
 
     private String toUpperOrNull(String value) {

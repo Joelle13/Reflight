@@ -11,4 +11,6 @@ public interface FlightService {
     Flight createFlight(FlightDto flightDto);
     List<Flight> searchFlights(LocalDate date, String airline, String number);
     Flight getFlightByFlightNumber(String flightNumber);
+
+    List<Flight> getSortedFlights(String sortBy, boolean desc);
 }

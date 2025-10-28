@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/v1/flights")
@@ -57,5 +58,17 @@ public class FlightController {
                 .map(FlightDto::mapToDTO)
                 .toList();
         return ResponseEntity.ok(flightDtos);
+    }
+
+    @GetMapping("/sorted")
+    public ResponseEntity<List<FlightDto>> sortedFlights(
+            @RequestParam String sortBy,
+            @RequestParam boolean desc
+    ) {
+        List<Flight> flights = flightService.getSortedFlights(sortBy, desc);
+        List<FlightDto> flightsDtos = flights.stream()
+                .map(FlightDto::mapToDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(flightsDtos);
     }
 }
