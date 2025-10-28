@@ -13,6 +13,7 @@ import fr.joellehuyen.AirFrance_FlightReviews.repositories.ReviewRepository;
 import fr.joellehuyen.AirFrance_FlightReviews.repositories.UserRepository;
 import fr.joellehuyen.AirFrance_FlightReviews.services.ReviewService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -35,7 +36,7 @@ public class ReviewServiceImpl implements ReviewService {
     public Review createReview(ReviewDto review) {
         User user = userRepository.findById(review.getUserId())
                 .orElseThrow(() -> new UserNotFoundException(review.getUserId()));
-        Flight flight = flightRepository.findById(review.getFlightId())
+        Flight flight = flightRepository.findById(review.getFlightId().toUpperCase())
                 .orElseThrow(() -> new FlightNotFoundException(review.getFlightId()));
         Review newReview = new Review(user, flight, review.getRating(), review.getComments());
         return reviewRepository.save(newReview);
@@ -76,6 +77,24 @@ public class ReviewServiceImpl implements ReviewService {
     public void deleteReviewById(String id) {
         getReviewById(id);
         reviewRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Review> getSortedReviews(String sortBy, boolean desc) {
+        Sort sort = buildSort(sortBy, desc);
+        return reviewRepository.findAll(sort);
+
+    }
+
+    private Sort buildSort(String sortBy, boolean desc) {
+        Sort.Direction direction = desc ? Sort.Direction.DESC : Sort.Direction.ASC;
+        return switch (sortBy) {
+            case "date" -> Sort.by(direction, "reviewDate");
+            case "rating" -> Sort.by(direction, "rating");
+            case "airline" -> Sort.by(direction, "flight.airlineName");
+            case "status" -> Sort.by(direction, "status");
+            default -> Sort.by(Sort.Direction.ASC, "reviewDate");
+        };
     }
 
     private String toUpperOrNull(String value) {
