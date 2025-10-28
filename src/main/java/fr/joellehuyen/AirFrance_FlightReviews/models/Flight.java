@@ -3,7 +3,10 @@ package fr.joellehuyen.AirFrance_FlightReviews.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Table(name="flight")
@@ -17,8 +20,10 @@ public class Flight {
     private String id;
     private String departureAirport;
     private String arrivalAirport;
-    private LocalDateTime departureTime;
-    private LocalDateTime arrivalTime;
+    private LocalDate departureDate;
+    private LocalDate arrivalDate;
+    private LocalTime departureTime;
+    private LocalTime arrivalTime;
 
     @ManyToOne
     @JoinColumn(name="airline_id", nullable=false)

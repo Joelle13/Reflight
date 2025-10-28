@@ -1,0 +1,11 @@
+package fr.joellehuyen.AirFrance_FlightReviews.services;
+
+import fr.joellehuyen.AirFrance_FlightReviews.dtos.UserDto;
+import fr.joellehuyen.AirFrance_FlightReviews.models.User;
+
+import java.util.List;
+
+public interface UserService {
+    List<User> getAllUsers();
+    User createUser(UserDto user);
+}
