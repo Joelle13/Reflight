@@ -3,6 +3,7 @@ package fr.joellehuyen.AirFrance_FlightReviews.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -26,7 +27,7 @@ public class Review {
 
     private int rating;
     private String comments;
-    private LocalDateTime reviewDate;
+    private LocalDate reviewDate;
     private ReviewStatus status;
     private String response;
 
@@ -35,7 +36,7 @@ public class Review {
         this.flight = flight;
         this.rating = rating;
         this.comments = comments;
-        this.reviewDate = LocalDateTime.now();
-        this.status = ReviewStatus.PENDING;
+        this.reviewDate = LocalDate.now();
+        this.status = ReviewStatus.PUBLISHED;
     }
 }

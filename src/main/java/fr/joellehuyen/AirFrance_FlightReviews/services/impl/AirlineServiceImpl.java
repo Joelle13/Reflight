@@ -23,7 +23,7 @@ public class AirlineServiceImpl implements AirlineService {
     @Override
     public Airline createAirline(AirlineDto airlineDto) {
         Airline airline = new Airline();
-        airline.setName(airlineDto.getName());
+        airline.setName(airlineDto.getName().toUpperCase());
         return airlineRepository.save(airline);
     }
 }

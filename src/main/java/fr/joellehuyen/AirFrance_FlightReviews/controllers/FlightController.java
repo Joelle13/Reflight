@@ -27,34 +27,11 @@ public class FlightController {
         return ResponseEntity.ok(flights.stream().map(FlightDto::mapToDTO).toList());
     }
 
-    @Operation (summary = "Get flights by flight number", description = "Retrieve a list of flights with the specified flight number")
-    @GetMapping("/number/{flightNumber}")
-    public ResponseEntity<List<FlightDto>> getByFlightNumber(@PathVariable String flightNumber) {
-        List<FlightDto> flights = flightService.getByFlightNumber(flightNumber);
-        if (flights.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.ok(flights);
-    }
-
-    @Operation(summary = "Get flights by departure time", description = "Retrieve a list of flights departing at the specified time")
-    @GetMapping("/date/{date}")
-    public ResponseEntity<List<FlightDto>> getFlightsByDepartureTime(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        List<FlightDto> flights = flightService.getByDate(date);
-        if (flights.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.ok(flights);
-    }
-
-    @Operation(summary = "Get flights by airline", description = "Retrieve a list of flights operated by the specified airline")
-    @GetMapping("/airline/{airlineName}")
-    public ResponseEntity<List<FlightDto>> getByAirline(@PathVariable String airlineName) {
-        List<FlightDto> flights = flightService.getByAirlineName(airlineName);
-        if (flights.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.ok(flights);
+    @Operation (summary = "Get flight by flight number", description = "Retrieve a flight with the specified flight number")
+    @GetMapping("/{flightNumber}")
+    public ResponseEntity<FlightDto> getByFlightNumber(@PathVariable String flightNumber) {
+        Flight flight = flightService.getFlightByFlightNumber(flightNumber);
+        return ResponseEntity.ok(FlightDto.mapToDTO(flight));
     }
 
     @Operation (summary = "Create a new flight", description = "Create a new flight with the provided details")
@@ -71,11 +48,14 @@ public class FlightController {
             @RequestParam(required = false) String airline,
             @RequestParam(required = false) String number) {
 
-        List<FlightDto> results = flightService.searchFlights(date, airline, number);
+        List<Flight> results = flightService.searchFlights(date, airline, number);
 
         if (results.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(results);
+        List<FlightDto> flightDtos = results.stream()
+                .map(FlightDto::mapToDTO)
+                .toList();
+        return ResponseEntity.ok(flightDtos);
     }
 }

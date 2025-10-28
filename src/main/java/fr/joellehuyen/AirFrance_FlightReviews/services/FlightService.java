@@ -8,14 +8,7 @@ import java.util.List;
 
 public interface FlightService {
     List<Flight> findAll();
-
     Flight createFlight(FlightDto flightDto);
-
-    List<FlightDto> getByDate(LocalDate date);
-
-    List<FlightDto> searchFlights(LocalDate date, String airline, String number);
-
-    List<FlightDto> getByAirlineName(String airlineName);
-
-    List<FlightDto> getByFlightNumber(String flightNumber);
+    List<Flight> searchFlights(LocalDate date, String airline, String number);
+    Flight getFlightByFlightNumber(String flightNumber);
 }

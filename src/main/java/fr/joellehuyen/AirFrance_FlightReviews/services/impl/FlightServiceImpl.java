@@ -2,6 +2,7 @@ package fr.joellehuyen.AirFrance_FlightReviews.services.impl;
 
 import fr.joellehuyen.AirFrance_FlightReviews.dtos.FlightDto;
 import fr.joellehuyen.AirFrance_FlightReviews.exceptions.AirlineNotFoundException;
+import fr.joellehuyen.AirFrance_FlightReviews.exceptions.FlightNotFoundException;
 import fr.joellehuyen.AirFrance_FlightReviews.models.Airline;
 import fr.joellehuyen.AirFrance_FlightReviews.models.Flight;
 import fr.joellehuyen.AirFrance_FlightReviews.repositories.AirlineRepository;
@@ -11,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -27,7 +29,7 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public Flight createFlight(FlightDto flightDto) {
-        Airline airline = airlineRepository.findByName(flightDto.getAirlineName());
+        Airline airline = airlineRepository.findByName(flightDto.getAirlineName().toUpperCase());
         if(airline == null){
             throw new AirlineNotFoundException(flightDto.getAirlineName());
         }
@@ -36,32 +38,22 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public List<FlightDto> getByDate(LocalDate date) {
-        List<Flight> flights = flightRepository.getFlightsByDepartureDate(date);
-        return flights.stream().map(FlightDto::mapToDTO).toList();
+    public List<Flight> searchFlights(LocalDate date, String airline, String number) {
+        String airlineToUpper = airline;
+        String numberToUpper = number;
+        if(airline != null){
+            airlineToUpper = airline.toUpperCase();
+        }
+        if(number != null){
+            numberToUpper = number.toUpperCase();
+        }
+
+        return flightRepository.searchFlights(date, airlineToUpper, numberToUpper);
     }
 
     @Override
-    public List<FlightDto> searchFlights(LocalDate date, String airline, String number) {
-        List<Flight> flights = flightRepository.findAll().stream()
-                .filter(flight -> (date == null || flight.getDepartureTime().toLocalDate().equals(date)) &&
-                        (airline == null || flight.getAirline().getName().equalsIgnoreCase(airline)) &&
-                        (number == null || flight.getId().equalsIgnoreCase(number)))
-                .toList();
-        return flights.stream().map(FlightDto::mapToDTO).toList();
-    }
-
-    @Override
-    public List<FlightDto> getByAirlineName(String airlineName) {
-        List<Flight> flights = flightRepository.findByAirline(airlineName);
-        return flights.stream().map(FlightDto::mapToDTO).toList();
-    }
-
-    @Override
-    public List<FlightDto> getByFlightNumber(String flightNumber) {
-        List<Flight> flights = flightRepository.findAll().stream()
-                .filter(flight -> flight.getId().equalsIgnoreCase(flightNumber))
-                .toList();
-        return flights.stream().map(FlightDto::mapToDTO).toList();
+    public Flight getFlightByFlightNumber(String flightNumber) {
+        return flightRepository.findById(flightNumber.toUpperCase())
+                .orElseThrow(() -> new FlightNotFoundException(flightNumber));
     }
 }

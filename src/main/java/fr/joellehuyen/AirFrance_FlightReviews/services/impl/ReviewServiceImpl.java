@@ -2,9 +2,11 @@ package fr.joellehuyen.AirFrance_FlightReviews.services.impl;
 
 import fr.joellehuyen.AirFrance_FlightReviews.dtos.ReviewDto;
 import fr.joellehuyen.AirFrance_FlightReviews.exceptions.FlightNotFoundException;
+import fr.joellehuyen.AirFrance_FlightReviews.exceptions.ReviewNotFoundException;
 import fr.joellehuyen.AirFrance_FlightReviews.exceptions.UserNotFoundException;
 import fr.joellehuyen.AirFrance_FlightReviews.models.Flight;
 import fr.joellehuyen.AirFrance_FlightReviews.models.Review;
+import fr.joellehuyen.AirFrance_FlightReviews.models.ReviewStatus;
 import fr.joellehuyen.AirFrance_FlightReviews.models.User;
 import fr.joellehuyen.AirFrance_FlightReviews.repositories.FlightRepository;
 import fr.joellehuyen.AirFrance_FlightReviews.repositories.ReviewRepository;
@@ -13,6 +15,7 @@ import fr.joellehuyen.AirFrance_FlightReviews.services.ReviewService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -36,5 +39,45 @@ public class ReviewServiceImpl implements ReviewService {
                 .orElseThrow(() -> new FlightNotFoundException(review.getFlightId()));
         Review newReview = new Review(user, flight, review.getRating(), review.getComments());
         return reviewRepository.save(newReview);
+    }
+
+    @Override
+    public Review answerReview(String id, String answer) {
+        Review review = reviewRepository.findById(id)
+                .orElseThrow(() -> new ReviewNotFoundException(id));
+        review.setResponse(answer);
+        review.setStatus(ReviewStatus.PROCESSED);
+        return reviewRepository.save(review);
+    }
+
+    @Override
+    public List<Review> getReviewsByDate(LocalDate date) {
+        return reviewRepository.findByReviewDate(date);
+    }
+
+    @Override
+    public List<Review> getReviewsByRating(int rating) {
+        return reviewRepository.findByRating(rating);
+    }
+
+    @Override
+    public List<Review> getReviewsByAirline(String airlineName) {
+       return reviewRepository.findByFlight_Airline_Name(airlineName);
+    }
+
+    @Override
+    public List<Review> getReviewsByStatus(String status) {
+        ReviewStatus reviewStatus = ReviewStatus.valueOf(status.toUpperCase());
+        return reviewRepository.findByStatus(reviewStatus);
+    }
+
+    @Override
+    public List<Review> getReviewsByFlightId(String flightId) {
+        return reviewRepository.findByFlight_Id(flightId);
+    }
+
+    @Override
+    public List<Review> getReviewsByKeyword(String keyword) {
+        return reviewRepository.findByKeywordInComments(keyword);
     }
 }
