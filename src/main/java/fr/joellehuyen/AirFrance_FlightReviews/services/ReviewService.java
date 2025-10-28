@@ -18,4 +18,6 @@ public interface ReviewService {
     Review getReviewById(String id);
 
     void deleteReviewById(String id);
+
+    List<Review> getSortedReviews(String sortBy, boolean desc);
 }

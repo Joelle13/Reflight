@@ -80,4 +80,16 @@ public class ReviewController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/sorted")
+    public ResponseEntity<List<ReviewResponseDto>> sortedReviews(
+            @RequestParam String sortBy,
+            @RequestParam boolean desc
+    ) {
+        List<Review> reviews = reviewService.getSortedReviews(sortBy, desc);
+        List<ReviewResponseDto> reviewDtos = reviews.stream()
+                .map(ReviewResponseDto::mapToDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(reviewDtos);
+    }
+
 }
