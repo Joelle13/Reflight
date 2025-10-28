@@ -48,63 +48,36 @@ public class ReviewController {
         return ResponseEntity.ok(responseDto);
     }
 
-    @Operation (summary = "To get reviews by date")
-    @GetMapping("/date/{date}")
-    public ResponseEntity<List<ReviewResponseDto>> getReviewsByDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        List<Review> reviews = reviewService.getReviewsByDate(date);
+    @Operation (summary = "To search reviews by various criteria")
+    @GetMapping("/search")
+    public ResponseEntity<List<ReviewResponseDto>> searchReviews(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            @RequestParam(required = false) Integer rating,
+            @RequestParam(required = false) String airlineName,
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String flightId,
+            @RequestParam(required = false) String keyword) {
+
+        List<Review> reviews = reviewService.searchReviews(date, rating, airlineName, status, flightId, keyword);
         List<ReviewResponseDto> reviewDtos = reviews.stream()
                 .map(ReviewResponseDto::mapToDTO)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(reviewDtos);
     }
 
-    @Operation (summary = "To get reviews by rating")
-    @GetMapping("/rating/{rating}")
-    public ResponseEntity<List<ReviewResponseDto>> getReviewsByRating(@PathVariable int rating) {
-        List<Review> reviews = reviewService.getReviewsByRating(rating);
-        List<ReviewResponseDto> reviewDtos = reviews.stream()
-                .map(ReviewResponseDto::mapToDTO)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(reviewDtos);
+    @Operation (summary = "To get a review by its id")
+    @GetMapping("/{id}")
+    public ResponseEntity<ReviewResponseDto> getReviewById(@PathVariable String id) {
+        Review review = reviewService.getReviewById(id);
+        ReviewResponseDto responseDto = ReviewResponseDto.mapToDTO(review);
+        return ResponseEntity.ok(responseDto);
     }
 
-    @Operation (summary = "To get reviews by airline name")
-    @GetMapping("/airline/{airlineName}")
-    public ResponseEntity<List<ReviewResponseDto>> getReviewsByAirline(@PathVariable String airlineName) {
-        List<Review> reviews = reviewService.getReviewsByAirline(airlineName);
-        List<ReviewResponseDto> reviewDtos = reviews.stream()
-                .map(ReviewResponseDto::mapToDTO)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(reviewDtos);
+    @Operation(summary = "To delete a review by its id")
+    @DeleteMapping ("/{id}")
+    public ResponseEntity<?> deleteReviewById(@PathVariable String id) {
+        reviewService.deleteReviewById(id);
+        return ResponseEntity.ok().build();
     }
 
-    @Operation (summary = "To get reviews by status")
-    @GetMapping("/status/{status}")
-    public ResponseEntity<List<ReviewResponseDto>> getReviewsByStatus(@PathVariable String status) {
-        List<Review> reviews = reviewService.getReviewsByStatus(status);
-        List<ReviewResponseDto> reviewDtos = reviews.stream()
-                .map(ReviewResponseDto::mapToDTO)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(reviewDtos);
-    }
-
-    @Operation (summary = "To get reviews by flight ID")
-    @GetMapping("flight/{flightId}")
-    public ResponseEntity<List<ReviewResponseDto>> getReviewsByFlightId(@PathVariable String flightId) {
-        List<Review> reviews = reviewService.getReviewsByFlightId(flightId);
-        List<ReviewResponseDto> reviewDtos = reviews.stream()
-                .map(ReviewResponseDto::mapToDTO)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(reviewDtos);
-    }
-
-    @Operation (summary = "To get reviews by keyword in comments")
-    @GetMapping("/keyword/{keyword}")
-    public ResponseEntity<List<ReviewResponseDto>> getReviewsByKeyword(@PathVariable String keyword) {
-        List<Review> reviews = reviewService.getReviewsByKeyword(keyword);
-        List<ReviewResponseDto> reviewDtos = reviews.stream()
-                .map(ReviewResponseDto::mapToDTO)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(reviewDtos);
-    }
 }
