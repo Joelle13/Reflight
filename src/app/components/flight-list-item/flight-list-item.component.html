@@ -1,0 +1,14 @@
+<div class="pt-4 p-2" *ngIf="flight">
+  <h3>{{flight.flightId}}</h3>
+  <h3>{{flight.airline.name}}</h3>
+  <p>{{flight.departureAirport}}</p>
+  <p>{{flight.arrivalAirport}}</p>
+  <p>{{flight.departureDate}}</p>
+  <p>{{flight.arrivalDate}}</p>
+  <p>{{flight.departureTime}}</p>
+  <p>{{flight.arrivalTime}}</p>
+</div>
+
+<div *ngIf="!flight">
+  <p>No flights available.</p>
+</div>
