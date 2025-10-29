@@ -11,6 +11,4 @@ export class AirlineService extends BaseService<Airline, AirlineCreateInput>{
     return "v1/airlines";
   }
 
-
-
 }

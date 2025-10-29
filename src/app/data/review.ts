@@ -2,7 +2,7 @@ import {Flight} from "./flight";
 import {User} from "./user";
 
 export interface Review {
-  reviewId: string;
+  id: string;
   flight:Flight;
   rating: number;
   comments: string;

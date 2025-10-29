@@ -1,0 +1,130 @@
+<div class="container">
+  <form
+    [formGroup]="addFlight"
+    class="needs-validation"
+    (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label class="label-custom">Numéro du vol</label>
+      <input type="text" class="form-control" formControlName="flightNumber"
+             [class.is-invalid]="flightNumber.invalid && flightNumber.touched"
+             [class.is-valid]="flightNumber.valid && flightNumber.touched">
+      <div *ngIf="flightNumber?.invalid && flightNumber.touched" class="invalid-feedback text-danger">
+        <div *ngIf="flightNumber?.errors?.['required']">Un numéro de vol est requis</div>
+        <div *ngIf="flightNumber?.errors?.['minlength']">Un numéro de vol doit contenir 3 caractères ou plus</div>
+        <div *ngIf="flightNumber?.errors?.['maxlength']">Un numéro de vol doit contenir 6 caractères ou moins</div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="label-custom">Compagnie aérienne</label>
+      <select name="airline" id="airline" class="form-control" formControlName="airline" [class.is-invalid]="airline.invalid && airline.touched"
+              [class.is-valid]="airline.valid && airline.touched">
+        <option value="" disabled selected></option>
+        <option *ngFor="let airline of airlines" [value]="airline.id" >{{airline.name}}</option>
+      </select>
+      <div *ngIf="airline?.invalid && airline.touched" class="invalid-feedback text-danger">
+        <div *ngIf="airline?.errors?.['required']">Une compagnie aérienne est requise</div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="label-custom">Aéroport de départ</label>
+      <input type="text" class="form-control" formControlName="departureAirport"
+             [class.is-invalid]="departureAirport.invalid && departureAirport.touched"
+             [class.is-valid]="departureAirport.valid && departureAirport.touched">
+      <div *ngIf="departureAirport?.invalid && departureAirport.touched" class="invalid-feedback text-danger">
+        <div *ngIf="departureAirport?.errors?.['required']">Un aéroport de départ est requis</div>
+        <div *ngIf="departureAirport?.errors?.['minlength']">Un aéroport de départ doit contenir 3 caractères ou plus</div>
+        <div *ngIf="departureAirport?.errors?.['maxlength']">Un aéroport de départ contenir 100 caractères ou moins</div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="label-custom">Aéroport d'arrivée</label>
+      <input type="text" class="form-control" formControlName="arrivalAirport"
+             [class.is-invalid]="arrivalAirport.invalid && arrivalAirport.touched"
+             [class.is-valid]="arrivalAirport.valid && arrivalAirport.touched">
+      <div *ngIf="arrivalAirport?.invalid && arrivalAirport.touched" class="invalid-feedback text-danger">
+        <div *ngIf="arrivalAirport?.errors?.['required']">Un aéroport d'arrivée est requis</div>
+        <div *ngIf="arrivalAirport?.errors?.['minlength']">Un aéroport d'arrivée doit contenir 3 caractères ou plus</div>
+        <div *ngIf="arrivalAirport?.errors?.['maxlength']">Un aéroport d'arrivée contenir 100 caractères ou moins</div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="label-custom d-block">Départ</label>
+      <div class="d-flex gap-3 align-items-center">
+        <!-- Champ de date -->
+        <input
+          type="date"
+          class="form-control w-auto"
+          formControlName="departureDate"
+          [class.is-invalid]="departureDate.invalid && departureDate.touched"
+          [class.is-valid]="departureDate.valid && departureDate.touched"
+        />
+        <!-- Champ d'heure -->
+        <input
+          type="time"
+          class="form-control w-auto"
+          formControlName="departureTime"
+          [class.is-invalid]="departureTime.invalid && departureTime.touched"
+          [class.is-valid]="departureTime.valid && departureTime.touched"
+        />
+      </div>
+
+      <div *ngIf="departureDate.invalid && departureDate.touched" class="invalid-feedback text-danger d-block">
+        <div *ngIf="departureDate.errors?.['required']">La date de départ est requise</div>
+        <div *ngIf="departureDate?.errors?.['dateNotAfterToday']">Veuillez choisir une date valide</div>
+      </div>
+      <div *ngIf="departureTime.invalid && departureTime.touched" class="invalid-feedback text-danger d-block">
+        <div *ngIf="departureTime.errors?.['required']">L’heure de départ est requise</div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="label-custom d-block">Arrivée</label>
+      <div class="d-flex gap-3 align-items-center">
+        <!-- Champ de date -->
+        <input
+          type="date"
+          class="form-control w-auto"
+          formControlName="arrivalDate"
+          [class.is-invalid]="arrivalDate.invalid && arrivalDate.touched"
+          [class.is-valid]="arrivalDate.valid && arrivalDate.touched"
+        />
+        <!-- Champ d'heure -->
+        <input
+          type="time"
+          class="form-control w-auto"
+          formControlName="arrivalTime"
+          [class.is-invalid]="arrivalTime.invalid && arrivalTime.touched"
+          [class.is-valid]="arrivalTime.valid && arrivalTime.touched"
+        />
+      </div>
+
+      <div *ngIf="arrivalDate.invalid && arrivalDate.touched" class="invalid-feedback text-danger d-block">
+        <div *ngIf="arrivalDate.errors?.['required']">La date de départ est requise</div>
+        <div *ngIf="arrivalDate?.errors?.['dateNotAfterToday']">Veuillez choisir une date valide</div>
+      </div>
+      <div *ngIf="arrivalTime.invalid && arrivalTime.touched" class="invalid-feedback text-danger d-block">
+        <div *ngIf="arrivalTime.errors?.['required']">L’heure de départ est requise</div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center mt-4">
+      <button type="submit" class="btn btn-success">Créer le vol</button>
+    </div>
+  </form>
+  <form [formGroup]="deleteFlight"
+        class="needs-validation"
+        (ngSubmit)="onSubmitDelete()">
+    <div class="mb-3">
+      <label class="label-custom">Numéro du vol</label>
+      <input type="text" class="form-control" formControlName="flightNumber"
+             [class.is-invalid]="flightNumberDelete.invalid && flightNumberDelete.touched"
+             [class.is-valid]="flightNumberDelete.valid && flightNumberDelete.touched">
+      <div *ngIf="flightNumberDelete?.invalid && flightNumberDelete.touched" class="invalid-feedback text-danger">
+        <div *ngIf="flightNumberDelete?.errors?.['required']">Un numéro de vol est requis</div>
+        <div *ngIf="flightNumberDelete?.errors?.['minlength']">Un numéro de vol doit contenir 3 caractères ou plus</div>
+        <div *ngIf="flightNumberDelete?.errors?.['maxlength']">Un numéro de vol doit contenir 6 caractères ou moins</div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center mt-4">
+      <button type="submit" class="btn btn-danger">Supprimer le vol</button>
+    </div>
+  </form>
+</div>

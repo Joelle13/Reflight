@@ -38,8 +38,8 @@ export default abstract class BaseService<ENTITY, ENTITY_CREATE_INPUT> {
       );
   }
 
-  delete(entity: ENTITY & { id: string }): Observable<boolean> {
-    return this.http.delete<boolean>(`${this.baseUrl}${this.getEndpointUrl()}/${entity.id}`)
+  delete(id: string ): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.baseUrl}${this.getEndpointUrl()}/${id}`)
       .pipe(
         catchError(this.handleError<boolean>('delete', false))
       );
