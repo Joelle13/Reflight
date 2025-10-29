@@ -1,0 +1,13 @@
+<div class="pt-4 p-2" *ngIf="review">
+  <h3>{{review.user.firstName}}</h3>
+  <h3>{{review.rating}}</h3>
+  <h3>{{review.reviewDate}}</h3>
+  <p>{{review.comments}}</p>
+  <p>{{review.reviewStatus}}</p>
+  <p>{{review.flight.flightId}}</p>
+  <h3>{{review.flight.airline.name}}</h3>
+</div>
+
+<div *ngIf="!review">
+  <p>No reviews available.</p>
+</div>

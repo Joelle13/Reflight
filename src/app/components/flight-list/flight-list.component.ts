@@ -12,7 +12,7 @@ export class FlightListComponent {
 
   constructor(private flightService: FlightService) {}
   ngOnInit(): void {
-    this.flightService.getFlights().subscribe(flights => {
+    this.flightService.getAll().subscribe(flights => {
       this.flights = flights;
     })
   }
