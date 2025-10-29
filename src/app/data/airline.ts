@@ -1,5 +1,6 @@
 export interface Airline {
-  airlineId:string;
+  id:string;
   name:string;
+  url:string
 }
 export type AirlineCreateInput = Omit<Airline, 'airlineId'>;

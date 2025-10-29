@@ -1,6 +1,9 @@
 <div class="pt-4 p-2" *ngIf="flight">
-  <h3>{{flight.flightId}}</h3>
-  <h3>{{flight.airline.name}}</h3>
+  <h3>{{flight.id}}</h3>
+  <div class="col-md-2">
+    <h3>{{flight.airline.name}}</h3>
+    <img src="{{flight.airline.url}}" alt="{{flight.airline.name}}">
+  </div>
   <p>{{flight.departureAirport}}</p>
   <p>{{flight.arrivalAirport}}</p>
   <p>{{flight.departureDate}}</p>

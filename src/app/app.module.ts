@@ -13,6 +13,8 @@ import { ReviewListComponent } from './components/review-list/review-list.compon
 import {UserService} from "./services/userService";
 import { ReviewListItemComponent } from './components/review-list-item/review-list-item.component';
 import {ReviewService} from "./services/reviewService";
+import { AddFlightFormComponent } from './components/add-flight-form/add-flight-form.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -21,13 +23,15 @@ import {ReviewService} from "./services/reviewService";
     FlightListComponent,
     FlightListItemComponent,
     ReviewListComponent,
-    ReviewListItemComponent
+    ReviewListItemComponent,
+    AddFlightFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
 
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [
     FlightService,

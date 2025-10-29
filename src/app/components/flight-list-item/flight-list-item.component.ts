@@ -9,5 +9,4 @@ import {Flight} from "../../data/flight";
 export class FlightListItemComponent {
   @Input()
   flight!: Flight;
-
 }

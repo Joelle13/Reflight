@@ -1,7 +1,7 @@
 import { Airline} from "./airline";
 
 export interface Flight {
-  flightId:string;
+  id:string;
   departureAirport:string;
   arrivalAirport:string;
   departureDate:Date;
