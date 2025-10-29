@@ -1,0 +1,9 @@
+<div *ngIf="reviews && reviews.length">
+  <div *ngFor="let review of reviews">
+    <app-review-list-item [review]="review"></app-review-list-item>
+  </div>
+</div>
+
+<div *ngIf="!reviews || reviews.length === 0">
+  <p>No reviews available.</p>
+</div>

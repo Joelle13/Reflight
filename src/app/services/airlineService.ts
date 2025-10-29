@@ -1,16 +1,16 @@
 import {Injectable} from "@angular/core";
 import {environment} from "../environnement/environnement";
-import {HttpClient} from "@angular/common/http";
-import {Airline} from "../data/airline";
+import {Airline, AirlineCreateInput} from "../data/airline";
+import BaseService from "./baseService";
 
 @Injectable()
-export class AirlineService {
+export class AirlineService extends BaseService<Airline, AirlineCreateInput>{
   private airlinesUrl = `${environment.apiUrl}v1/airlines`
-  constructor(private http: HttpClient) {
+
+  getEndpointUrl(): string {
+    return "v1/airlines";
   }
 
-  getAirlines() {
-    return this.http.get<Airline[]>(this.airlinesUrl);
-  }
+
 
 }

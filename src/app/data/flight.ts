@@ -11,7 +11,6 @@ export interface Flight {
   airline:Airline;
 }
 
-export type FlightCreateInput = Omit<Flight,'flightId' |'airline' | 'departureAirport' | 'arrivalAirport' | 'departureDate'
- | 'arrivalDate' | 'departureTime' | 'arrivalTime'>&{
+export type FlightCreateInput = Omit<Flight,'flightId' |'airline'>&{
   airlineId:string;
 }

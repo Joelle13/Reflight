@@ -9,13 +9,19 @@ import {FlightService} from "./services/flightService";
 import { FlightListComponent } from './components/flight-list/flight-list.component';
 import { FlightListItemComponent } from './components/flight-list-item/flight-list-item.component';
 import {AirlineService} from "./services/airlineService";
+import { ReviewListComponent } from './components/review-list/review-list.component';
+import {UserService} from "./services/userService";
+import { ReviewListItemComponent } from './components/review-list-item/review-list-item.component';
+import {ReviewService} from "./services/reviewService";
 
 @NgModule({
   declarations: [
     AppComponent,
     TopBarComponent,
     FlightListComponent,
-    FlightListItemComponent
+    FlightListItemComponent,
+    ReviewListComponent,
+    ReviewListItemComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +31,9 @@ import {AirlineService} from "./services/airlineService";
   ],
   providers: [
     FlightService,
-    AirlineService
+    AirlineService,
+    UserService,
+    ReviewService
   ],
   bootstrap: [AppComponent]
 })
