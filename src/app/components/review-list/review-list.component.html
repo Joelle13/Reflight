@@ -1,6 +1,24 @@
+<!-- Switch admin flottant -->
+<div class="admin-mode-toggle">
+  <div class="toggle-container">
+    <span class="toggle-label">👤 Utilisateur</span>
+    <label class="switch">
+      <input
+        #toggle
+        type="checkbox"
+        [checked]="mode === 'admin'"
+        (change)="onToggleMode(toggle.checked)"
+      />
+      <span class="slider"></span>
+    </label>
+    <span class="toggle-label">🛡️ Admin</span>
+  </div>
+</div>
+
+<app-review-search></app-review-search>
 <div *ngIf="reviews && reviews.length">
   <div *ngFor="let review of reviews">
-    <app-review-list-item [review]="review"></app-review-list-item>
+    <app-review-list-item [review]="review" [mode]="mode"></app-review-list-item>
   </div>
 </div>
 

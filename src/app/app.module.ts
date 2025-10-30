@@ -16,6 +16,7 @@ import {ReviewService} from "./services/reviewService";
 import { AddFlightFormComponent } from './components/add-flight-form/add-flight-form.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { FlightSearchComponent } from './components/flight-search/flight-search.component';
+import { ReviewSearchComponent } from './components/review-search/review-search.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { FlightSearchComponent } from './components/flight-search/flight-search.
     ReviewListComponent,
     ReviewListItemComponent,
     AddFlightFormComponent,
-    FlightSearchComponent
+    FlightSearchComponent,
+    ReviewSearchComponent
   ],
   imports: [
     BrowserModule,

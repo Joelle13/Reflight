@@ -1,13 +1,128 @@
-<div class="pt-4 p-2" *ngIf="review">
-  <h3>{{review.user.firstName}}</h3>
-  <h3>{{review.rating}}</h3>
-  <h3>{{review.reviewDate}}</h3>
-  <p>{{review.comments}}</p>
-  <p>{{review.reviewStatus}}</p>
-  <p>{{review.flight.id}}</p>
-  <h3>{{review.flight.airline.name}}</h3>
-</div>
+<div class="pt-4 p-2 review" *ngIf="review && mode ==='user'">
+  <!-- Détails du vol -->
+  <div class="review-flight-info">
+    <span class="flight-info">{{review.flight.id}}</span>
+    <span class="flight-info">{{review.flight.departureAirport}}</span>
+    <i class="fa fa-plane"></i>
+    <span class="flight-info">{{review.flight.arrivalAirport}}</span>
+    <div class="airline-info">
+      <h3>{{review.flight.airline.name}}</h3>
+      <img src="{{review.flight.airline.url}}" alt="{{review.flight.airline.name}}">
+    </div>
+  </div>
+  <!-- En-tête de l'avis -->
+  <div class="review-header">
+    <div class="review-author">
+      <div class="author-info">
+        <h3 class="author-name">{{review.user.firstName}} {{review.user.lastName}}</h3>
+        <div class="review-rating">
+          <i class="fa fa-star" *ngFor="let star of [1,2,3,4,5]"
+             [class.filled]="star <= review.rating"></i>
+        </div>
+        <!-- Contenu de l'avis -->
+        <div class="review-content">
+          <p class="review-text">{{review.comments}}</p>
+          <div class="admin-response" *ngIf="review.response">
+            <div class="response-header">
+              <i class="fa fa-reply"></i>
+              <span class="response-label">Réponse de l'équipe</span>
+            </div>
+            <p class="response-text">{{review.response}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="review-meta">
+      <span class="review-date">{{review.reviewDate | date:'dd/MM/yyyy'}}</span>
+      <span class="badge" [ngClass]="'badge-' + review.status">
+            {{getStatusLabel(review.status)}}
+      </span>
+    </div>
+  </div>
+  </div>
+
+  <!-- Admin -->
+  <div class="pt-4 p-2 review" *ngIf="review && mode ==='admin'">
+
+    <!-- Détails du vol -->
+    <div class="review-flight-info">
+      <span class="flight-info">{{review.flight.id}}</span>
+      <span class="flight-info">{{review.flight.departureAirport}}</span>
+      <i class="fa fa-plane"></i>
+      <span class="flight-info">{{review.flight.arrivalAirport}}</span>
+      <div class="airline-info">
+        <h3>{{review.flight.airline.name}}</h3>
+        <img src="{{review.flight.airline.url}}" alt="{{review.flight.airline.name}}">
+      </div>
+    </div>
+    <!-- En-tête de l'avis -->
+    <div class="review-header">
+      <div class="review-author">
+        <div class="author-info">
+          <h3 class="author-name">{{review.user.firstName}}</h3>
+          <div class="review-rating">
+            <i class="fa fa-star" *ngFor="let star of [1,2,3,4,5]"
+               [class.filled]="star <= review.rating"></i>
+          </div>
+          <!-- Contenu de l'avis -->
+          <div class="review-content">
+            <p class="review-text">{{review.comments}}</p>
+            <div class="admin-response" *ngIf="review.response">
+              <div class="response-header">
+                <i class="fa fa-reply"></i>
+                <span class="response-label">Réponse de l'équipe</span>
+              </div>
+              <p class="response-text">{{review.response}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="review-meta">
+        <span class="review-date">{{review.reviewDate | date:'dd/MM/yyyy'}}</span>
+        <span class="badge" [ngClass]="'badge-' + review.status">
+            {{getStatusLabel(review.status)}}
+      </span>
+      </div>
+    </div>
+
+  <!-- Actions admin -->
+  <div class="review-actions">
+    <button
+      class="btn-action btn-respond">
+<!--      (click)="openResponseModal(review)"-->
+<!--      *ngIf="!review.adminResponse">-->
+      <i class="fa fa-reply"></i> Répondre
+    </button>
+    <button
+      class="btn-action btn-edit">
+<!--      (click)="openResponseModal(review)"-->
+<!--      *ngIf="review.adminResponse">-->
+      <i class="fa fa-edit"></i> Modifier la réponse
+    </button>
+    <button
+      class="btn-action btn-approve">
+<!--      (click)="approveReview(review)"-->
+<!--      *ngIf="review.status !== 'approved'">-->
+      <i class="fa fa-check"></i> Approuver
+    </button>
+    <button
+      class="btn-action btn-reject">
+<!--      (click)="rejectReview(review)"-->
+<!--      *ngIf="review.status !== 'rejected'">-->
+      <i class="fa fa-times"></i> Rejeter
+    </button>
+    <button
+      class="btn-action btn-delete">
+<!--      (click)="confirmDelete(review)">-->
+      <i class="fa fa-trash"></i> Supprimer
+    </button>
+  </div>
+  </div>
+
+
+
 
 <div *ngIf="!review">
   <p>No reviews available.</p>
 </div>
+
