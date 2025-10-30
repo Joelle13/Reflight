@@ -1,4 +1,4 @@
-<div class="pt-4 p-2 review" *ngIf="review && mode ==='user'">
+<div class="pt-4 p-2 review" *ngIf="review && mode ==='user' && review.status !== 'REJECTED'">
   <!-- Détails du vol -->
   <div class="review-flight-info">
     <span class="flight-info">{{review.flight.id}}</span>
@@ -59,7 +59,7 @@
     <div class="review-header">
       <div class="review-author">
         <div class="author-info">
-          <h3 class="author-name">{{review.user.firstName}}</h3>
+          <h3 class="author-name">{{review.user.firstName}} {{review.user.lastName}}</h3>
           <div class="review-rating">
             <i class="fa fa-star" *ngFor="let star of [1,2,3,4,5]"
                [class.filled]="star <= review.rating"></i>
@@ -88,39 +88,63 @@
   <!-- Actions admin -->
   <div class="review-actions">
     <button
-      class="btn-action btn-respond">
-<!--      (click)="openResponseModal(review)"-->
-<!--      *ngIf="!review.adminResponse">-->
+      class="btn-action btn-respond"
+      (click)="openResponseModal(review)"
+      *ngIf="!review.response">
       <i class="fa fa-reply"></i> Répondre
     </button>
     <button
-      class="btn-action btn-edit">
-<!--      (click)="openResponseModal(review)"-->
-<!--      *ngIf="review.adminResponse">-->
+      class="btn-action btn-edit"
+      (click)="openResponseModal(review)"
+      *ngIf="review.response">
       <i class="fa fa-edit"></i> Modifier la réponse
     </button>
     <button
-      class="btn-action btn-approve">
-<!--      (click)="approveReview(review)"-->
-<!--      *ngIf="review.status !== 'approved'">-->
-      <i class="fa fa-check"></i> Approuver
+      class="btn-action btn-approve"
+            (click)="publishReview(review)"
+            *ngIf="review.status == 'REJECTED'">
+      <i class="fa fa-check"></i> Publier
     </button>
     <button
-      class="btn-action btn-reject">
-<!--      (click)="rejectReview(review)"-->
-<!--      *ngIf="review.status !== 'rejected'">-->
+      class="btn-action btn-reject"
+      (click)="rejectReview(review)"
+      *ngIf="review.status !== 'REJECTED'">
       <i class="fa fa-times"></i> Rejeter
     </button>
     <button
-      class="btn-action btn-delete">
-<!--      (click)="confirmDelete(review)">-->
+      class="btn-action btn-delete"
+      (click)="confirmDelete(review)">
       <i class="fa fa-trash"></i> Supprimer
     </button>
   </div>
   </div>
 
-
-
+<!-- Modal réponse admin -->
+<div class="modal-overlay" *ngIf="showResponseModal" (click)="closeResponseModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Répondre à l'avis</h3>
+      <button class="btn-close" (click)="closeResponseModal()">
+        <i class="fa fa-times"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="review-preview">
+        <p><strong>Avis de {{review.user.firstName}} {{review.user.lastName}}</strong></p>
+        <p class="preview-text">{{selectedReview?.comments}}</p>
+      </div>
+      <textarea
+        class="response-textarea"
+        placeholder="Votre réponse..."
+        [(ngModel)]="adminResponseText"
+        rows="6"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" (click)="closeResponseModal()">Annuler</button>
+      <button class="btn-submit" (click)="submitResponse()">Envoyer la réponse</button>
+    </div>
+  </div>
+</div>
 
 <div *ngIf="!review">
   <p>No reviews available.</p>
