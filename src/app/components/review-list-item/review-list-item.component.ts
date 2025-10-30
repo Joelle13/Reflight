@@ -14,7 +14,6 @@ export class ReviewListItemComponent {
   @Input() mode: Mode = 'user';
 
   getStatusLabel(status: string) {
-    console.log(status);
     switch (status) {
       case 'PROCESSED':
         return 'Traité';
