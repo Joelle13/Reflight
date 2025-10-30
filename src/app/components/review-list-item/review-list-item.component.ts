@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Review} from "../../data/review";
+import {Mode} from "../types/types";
 
 @Component({
   selector: 'app-review-list-item',
@@ -10,4 +11,19 @@ export class ReviewListItemComponent {
   @Input()
   review!: Review;
 
+  @Input() mode: Mode = 'user';
+
+  getStatusLabel(status: string) {
+    console.log(status);
+    switch (status) {
+      case 'PROCESSED':
+        return 'Traité';
+      case 'PUBLISHED':
+        return 'Publié';
+      case 'REJECTED':
+        return 'Rejeté';
+      default:
+        return 'Unknown';
+    }
+  }
 }

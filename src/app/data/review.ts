@@ -8,7 +8,8 @@ export interface Review {
   comments: string;
   user: User;
   reviewDate :Date;
-  reviewStatus:string;
+  status:string;
+  response?: string;
 }
 
 export type ReviewCreateInput = Omit<Review, 'reviewId' | 'user' | 'flight'>&{
