@@ -42,7 +42,6 @@ export class FlightSearchComponent {
     if (this.date !== '') {
       params.date = this.date;
     }
-    console.log('Recherche avec les paramètres :', params);
     this.flightService.searchFlights(params).subscribe({
       next: (data) => {
         this.flights = data;
@@ -59,7 +58,7 @@ export class FlightSearchComponent {
 
   onSortChange(event: any) {
     const sortValue = event.target.value;
-    this.flightService.sortFlights(sortValue, true).subscribe(sortedFlights => {
+    this.flightService.sortFlights(sortValue, false).subscribe(sortedFlights => {
       this.flights = sortedFlights;
       this.flightsFound.emit(this.flights);
     }

@@ -28,7 +28,7 @@ export class AddFlightFormComponent {
 
   addFlight= this.formBuilder.group({
     flightNumber: ['', {
-      validators: [Validators.required, Validators.minLength(3), Validators.maxLength(6)],
+      validators: [Validators.required, Validators.minLength(3), Validators.maxLength(10)],
     }],
     airline: ['', Validators.required],
     departureAirport: ['', {
@@ -135,13 +135,18 @@ export class AddFlightFormComponent {
 
   onSubmitDelete() {
     if (this.deleteFlight.valid) {
-      const flightId = this.deleteFlight.value.flightNumber ?? '';
-      this.flightService.delete(flightId).subscribe(() => {
-        this.router.navigate(['/'])
-        this.displayToast(true, "Vol supprimé avec succès !");
-      });
-    } else {
-      this.displayToast(false, "Veuillez vérifier le numéro de vol à supprimer");
+      this.flightService.delete(this.deleteFlight.value.flightNumber ?? '')
+        .subscribe( {
+          next: () => {
+            this.router.navigate(['/'])
+            this.displayToast(true, "Vol supprimé avec succès !");
+          },
+          error: (err) => {
+            console.error('Erreur lors de la suppression', err);
+            this.displayToast(false, "Aucun vol trouvé avec ce numéro !");
+          }
+        })
     }
   }
+
 }
