@@ -13,7 +13,7 @@ import java.time.LocalTime;
 public record ReviewResponseDto (
     int rating,
     String comments,
-    ReviewStatus status,
+    String status,
     String response,
     String id,
     LocalDate reviewDate,
@@ -24,7 +24,7 @@ public record ReviewResponseDto (
         return new ReviewResponseDto(
                 review.getRating(),
                 review.getComments(),
-                review.getStatus(),
+                review.getStatus().toString(),
                 review.getResponse(),
                 review.getId(),
                 review.getReviewDate(),
