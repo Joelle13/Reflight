@@ -1,0 +1,45 @@
+<section class="search-section">
+  <div class="search-overlay">
+    <form class="search-form" (ngSubmit)="onSearch()">
+      <div class="input-group">
+        <i class="fa fa-search"></i>
+        <input type="text" placeholder="Numéro de vol" [(ngModel)]="flightNumber" name="flightNumber" class="search-icon">
+      </div>
+
+      <div class="input-group">
+        <i class="fa fa-search"></i>
+        <input type="text" placeholder="Compagnie" [(ngModel)]="airline" name="airline"  class="search-icon">
+      </div>
+
+      <div class="input-group">
+        <i class="fa fa-calendar"></i>
+        <input type="date" [(ngModel)]="date" name="date">
+      </div>
+
+      <button type="submit" class="btn-search">Rechercher les vols</button>
+    </form>
+  </div>
+</section>
+
+<!-- Section résultats avec tri -->
+<div class="results-section">
+  <div class="container">
+    <div class="results-header">
+      <div class="results-count">
+        <i class="fa fa-plane"></i>
+        <h2>Vols trouvés (0)</h2>
+      </div>
+
+      <div class="results-sort">
+        <label for="sortSelect">Trier par :</label>
+        <select
+          id="sortSelect"
+          class="sort-select">
+          <option value="date">Date</option>
+          <option value="airline">Compagnie</option>
+          <option value="departure">Numéro de vol</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>

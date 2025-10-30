@@ -1,17 +1,59 @@
-<div class="pt-4 p-2" *ngIf="flight">
-  <h3>{{flight.id}}</h3>
-  <div class="col-md-2">
-    <h3>{{flight.airline.name}}</h3>
-    <img src="{{flight.airline.url}}" alt="{{flight.airline.name}}">
-  </div>
-  <p>{{flight.departureAirport}}</p>
-  <p>{{flight.arrivalAirport}}</p>
-  <p>{{flight.departureDate}}</p>
-  <p>{{flight.arrivalDate}}</p>
-  <p>{{flight.departureTime}}</p>
-  <p>{{flight.arrivalTime}}</p>
-</div>
-
 <div *ngIf="!flight">
   <p>No flights available.</p>
+</div>
+
+<div class="container d-flex justify-content-center" *ngIf="flight">
+  <div class="card mb-3 custom-card-size mt-3">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="" class="img-fluid rounded-start" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <!-- Header avec numéro de vol et compagnie -->
+          <div class="flight-header">
+            <h3>{{flight.id}}</h3>
+            <div class="airline-info">
+              <h3>{{flight.airline.name}}</h3>
+              <img src="{{flight.airline.url}}" alt="{{flight.airline.name}}">
+            </div>
+          </div>
+
+          <!-- Informations de vol en grille -->
+          <div class="flight-info-grid">
+            <div class="flight-info-item">
+              <label>Départ</label>
+              <span>{{flight.departureAirport}}</span>
+            </div>
+            <div class="flight-info-item">
+              <label>Arrivée</label>
+              <span>{{flight.arrivalAirport}}</span>
+            </div>
+            <div class="flight-info-item">
+              <label>Heure de départ</label>
+              <span>{{flight.departureTime}}</span>
+            </div>
+            <div class="flight-info-item">
+              <label>Date de départ</label>
+              <span>{{flight.departureDate| date:'dd/MM/yyyy'}}</span>
+            </div>
+            <div class="flight-info-item">
+              <label>Date d'arrivée</label>
+              <span>{{flight.arrivalDate | date:'dd/MM/yyyy'}}</span>
+            </div>
+            <div class="flight-info-item">
+              <label>Heure d'arrivée</label>
+              <span>{{flight.arrivalTime}}</span>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="d-flex justify-content-between">
+            <p class="card-text">Nombre d'avis : {{reviewCount}}</p>
+            <button class="btn btn-primary btn-custom-1 me-2" type="button" [routerLink]="">Rédiger un avis</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

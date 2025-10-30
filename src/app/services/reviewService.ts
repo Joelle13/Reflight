@@ -11,4 +11,8 @@ export class ReviewService extends BaseService<Review, ReviewCreateInput>{
     return "v1/reviews";
   }
 
+  getCountByFlightId(flightId: string) {
+    return this.http.get<number>(`${this.reviewsUrl}/count/flight/${flightId}`);
+  }
+
 }
