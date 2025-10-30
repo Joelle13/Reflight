@@ -3,30 +3,40 @@
     <h1 class="page-title">Tous les avis</h1>
 
     <div class="search-filters">
+
+      <div class="filter-group">
+        <i class="fa fa-search search-icon"></i>
+        <input type="text"
+               placeholder="Numéro de vol"
+               [(ngModel)]="searchFlightQuery"
+               (input)="onSearchReviews()"
+               class="search-input">
+      </div>
+
       <div class="filter-group">
         <input
           type="text"
-          placeholder="Rechercher par vol, compagnie..."
+          placeholder="Rechercher par mot-clé"
+          [(ngModel)]="searchKeywordsQuery"
+          (input)="onSearchReviews()"
           class="search-input">
         <i class="fa fa-search search-icon"></i>
       </div>
 
       <div class="filter-group">
-        <select
-          class="filter-select">
-
-          <option value="">Toutes les notes</option>
-          <option value="5">5 étoiles</option>
-          <option value="4">4 étoiles</option>
-          <option value="3">3 étoiles</option>
-          <option value="2">2 étoiles</option>
-          <option value="1">1 étoile</option>
+        <select class="filter-select"
+                [(ngModel)]="filterAirlines"
+                (change)="onFilterChange()">
+          <option value="">Toutes les compagnies</option>
+          <option *ngFor="let airline of airlines" [ngValue]="airline.name" >{{airline.name}}</option>
         </select>
       </div>
 
       <div class="filter-group">
         <select
-          class="filter-select">
+          class="filter-select"
+          [(ngModel)]="filterStatus"
+          (change)="onFilterChange()">
           <option value="">Tous les statuts</option>
           <option value="PUBLISHED">Publié</option>
           <option value="PROCESSED">Traité</option>
@@ -43,14 +53,16 @@
     <div class="results-header">
       <div class="results-count">
         <i class="fa fa-comment"></i>
-        <h2>Avis trouvés (0)</h2>
+        <h2>Avis trouvés ({{reviewCount}})</h2>
       </div>
 
       <div class="results-sort">
         <label for="sortSelect">Trier par :</label>
         <select
           id="sortSelect"
-          class="sort-select">
+          class="sort-select"
+          [(ngModel)]="sortBy"
+          (change)="onSortChange()">
           <option value="date-desc">Plus récents</option>
           <option value="date-asc">Plus anciens</option>
           <option value="rating-desc">Note décroissante</option>

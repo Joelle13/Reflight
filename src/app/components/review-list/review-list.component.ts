@@ -23,4 +23,8 @@ export class ReviewListComponent {
     this.mode = checked ? 'admin' : 'user';
     console.log(this.mode);
   }
+
+  updateReviews(newReviews: Review[]) {
+    this.reviews = newReviews;
+  }
 }
