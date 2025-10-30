@@ -86,6 +86,11 @@ public class ReviewServiceImpl implements ReviewService {
 
     }
 
+    @Override
+    public long countReviewsByFlightId(String flightId) {
+        return reviewRepository.countByFlight_FlightId(flightId.toUpperCase());
+    }
+
     private Sort buildSort(String sortBy, boolean desc) {
         Sort.Direction direction = desc ? Sort.Direction.DESC : Sort.Direction.ASC;
         return switch (sortBy) {

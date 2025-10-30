@@ -92,4 +92,11 @@ public class ReviewController {
         return ResponseEntity.ok(reviewDtos);
     }
 
+    @Operation (summary = "To count reviews by flight ID")
+    @GetMapping("/count/flight/{flightId}")
+    public ResponseEntity<Long> countReviewsByFlightId(@PathVariable String flightId) {
+        long count = reviewService.countReviewsByFlightId(flightId);
+        return ResponseEntity.ok(count);
+    }
+
 }

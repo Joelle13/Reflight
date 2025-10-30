@@ -20,4 +20,6 @@ public interface ReviewService {
     void deleteReviewById(String id);
 
     List<Review> getSortedReviews(String sortBy, boolean desc);
+
+    long countReviewsByFlightId(String flightId);
 }

@@ -25,4 +25,12 @@ WHERE r.reviewDate = COALESCE(:date, r.reviewDate)
   AND LOWER(r.comments) LIKE COALESCE(CONCAT('%', LOWER(:keyword), '%'), LOWER(r.comments))
 """)
     List<Review> searchReviews(LocalDate date, Integer rating, String airlineName, ReviewStatus status, String flightId, String keyword);
+
+    @Query ("""
+        SELECT COUNT(r)
+        FROM Review r
+        JOIN r.flight f
+        WHERE UPPER(f.id) = :flightId
+    """)
+    long countByFlight_FlightId(String flightId);
 }

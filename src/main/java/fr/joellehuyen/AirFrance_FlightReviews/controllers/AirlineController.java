@@ -19,11 +19,14 @@ public class AirlineController {
 
     @Operation (summary = "Get all airlines", description = "Retrieve a list of all available airlines")
     @GetMapping
-    public List<ResponseEntity<AirlineDto>> getAllAirlines() {
-        return airlineService.findAll().stream()
-                .map(airline -> ResponseEntity.ok(AirlineDto.mapToDTO(airline)))
+    public ResponseEntity<List<AirlineDto>> getAllAirlines() {
+        List<Airline> airlines = airlineService.findAll();
+        List<AirlineDto> airlineDtos = airlines.stream()
+                .map(AirlineDto::mapToDTO)
                 .toList();
+        return ResponseEntity.ok(airlineDtos);
     }
+
 
     @Operation (summary = "Create a new airline", description = "Create a new airline with the provided details")
     @PostMapping
