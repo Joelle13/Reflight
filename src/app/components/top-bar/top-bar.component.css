@@ -1,6 +1,142 @@
-.navbar-brand-custom {
-  color: black;
-  font-family: 'Rubik-Bold', sans-serif;
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 3rem;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Brand */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
+.brand-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.brand-link:hover {
+  transform: scale(1.02);
+}
+
+.brand-name {
+  font-family: 'Rubik', sans-serif;
   font-weight: 700;
-  font-size: 25px;
+  font-size: 1.75rem;
+  color: #051039;
+  letter-spacing: 0.5px;
+}
+
+.brand-logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Container des boutons */
+.navbar-buttons {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+/* Boutons de navigation */
+.btn-nav {
+  position: relative;
+  background: none;
+  border: none;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: #051039;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  overflow: hidden;
+}
+
+/* Ligne rouge animée */
+.btn-nav::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background-color: #e31837;
+  transition: width 0.3s ease;
+}
+
+.btn-nav:hover {
+  color: #e31837;
+}
+
+.btn-nav:hover::after {
+  width: 100%;
+}
+
+
+.btn-nav.active::after {
+  width: 100%;
+}
+
+/* Focus pour l'accessibilité */
+.btn-nav:focus {
+  outline: none;
+}
+
+.btn-nav:focus-visible {
+  outline: 2px solid #e31837;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .brand-name {
+    font-size: 1.5rem;
+  }
+
+  .brand-logo {
+    height: 30px;
+  }
+
+  .navbar-buttons {
+    gap: 1.5rem;
+  }
+
+  .btn-nav {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar {
+    padding: 1rem;
+  }
+
+  .navbar-buttons {
+    width: 100%;
+    justify-content: center;
+    margin-top: 1rem;
+    gap: 2rem;
+  }
+
+  .brand-name {
+    font-size: 1.3rem;
+  }
 }

@@ -1,0 +1,176 @@
+/* Carte principale */
+.custom-card-size {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 90% !important; /* Plus large */
+  max-width: 1200px;
+}
+
+.custom-card-size:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Corps de la carte */
+.custom-card-size .card-body {
+  padding: 1.5rem 2rem; /* Réduction du padding vertical */
+}
+
+/* Disposition en grille pour les informations */
+.flight-info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+/* Numéro de vol et compagnie sur la même ligne */
+.flight-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(192, 193, 196, 0.4);
+}
+
+.flight-header h3 {
+  color: #002157;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+/* Container de la compagnie aérienne */
+.airline-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+
+.airline-info h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.airline-info img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Informations de vol en grille */
+.flight-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.flight-info-item label {
+  font-size: 0.85rem;
+  color: #6c757d;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.flight-info-item span {
+  font-size: 1.1rem;
+  color: #212529;
+  font-weight: 500;
+}
+
+/* Section bas de carte */
+.custom-card-size .d-flex.justify-content-between {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e9ecef;
+  align-items: center;
+}
+
+.custom-card-size .card-text {
+  font-size: 0.95rem;
+  color: #6c757d;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Bouton personnalisé */
+.btn-custom-1 {
+  background: #051039;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 102, 204, 0.2);
+}
+
+.btn-custom-1:hover {
+  background: #1f3a9d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+}
+
+.btn-custom-1:active {
+  transform: translateY(0);
+}
+
+/* Cacher l'image latérale pour gagner de l'espace */
+.custom-card-size .col-md-4 {
+  display: none;
+}
+
+.custom-card-size .col-md-8 {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+/* Message "No flights" */
+.container > p {
+  text-align: center;
+  color: #6c757d;
+  font-size: 1.2rem;
+  padding: 3rem;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .flight-info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .custom-card-size {
+    width: 95% !important;
+  }
+
+  .flight-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .flight-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .custom-card-size .d-flex.justify-content-between {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .btn-custom-1 {
+    width: 100%;
+  }
+}
