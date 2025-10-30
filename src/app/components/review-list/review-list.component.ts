@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {Review} from "../../data/review";
 import {ReviewService} from "../../services/reviewService";
 import {Mode} from "../types/types";
+import {ReviewSearchComponent} from "../review-search/review-search.component";
 
 @Component({
   selector: 'app-review-list',
@@ -11,6 +12,9 @@ import {Mode} from "../types/types";
 export class ReviewListComponent {
   reviews:Review[] = [];
   mode: Mode = 'user';
+
+  @ViewChild(ReviewSearchComponent)
+  reviewSearch!: ReviewSearchComponent;
 
   constructor(private reviewService: ReviewService) {}
   ngOnInit(): void {
@@ -26,5 +30,13 @@ export class ReviewListComponent {
 
   updateReviews(newReviews: Review[]) {
     this.reviews = newReviews;
+  }
+
+  loadReviews() {
+    if (this.reviewSearch) {
+      this.reviewSearch.reload();
+    } else {
+      this.reviewService.getAll().subscribe(r => this.reviews = r);
+    }
   }
 }

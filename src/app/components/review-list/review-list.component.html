@@ -18,7 +18,7 @@
 <app-review-search (reviewsFound)="updateReviews($event)"></app-review-search>
 <div *ngIf="reviews && reviews.length">
   <div *ngFor="let review of reviews">
-    <app-review-list-item [review]="review" [mode]="mode"></app-review-list-item>
+    <app-review-list-item [review]="review" [mode]="mode" (refresh)="loadReviews()"></app-review-list-item>
   </div>
 </div>
 

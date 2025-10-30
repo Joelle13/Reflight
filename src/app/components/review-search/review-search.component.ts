@@ -23,6 +23,8 @@ export class ReviewSearchComponent {
 
   @Output() reviewsFound = new EventEmitter<Review[]>();
 
+  private lastCriteria: any = {};
+
   constructor(private reviewService: ReviewService, private airlineService: AirlineService) {}
 
   ngOnInit(): void {
@@ -59,6 +61,8 @@ export class ReviewSearchComponent {
     if (this.filterAirlines) criteria.airlineName = this.filterAirlines;
     if (this.filterStatus) criteria.status = this.filterStatus;
 
+    this.lastCriteria = criteria;
+
     // Appel backend search
     this.reviewService.searchReviews(criteria).subscribe(reviews => {
       this.reviews = reviews;
@@ -68,4 +72,10 @@ export class ReviewSearchComponent {
     });
   }
 
+  reload() {
+    const criteria = this.lastCriteria || {};
+    this.reviewService.searchReviews(criteria).subscribe(reviews => {
+      this.reviewsFound.emit(reviews);
+    });
+  }
 }

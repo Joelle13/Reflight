@@ -23,4 +23,21 @@ export class ReviewService extends BaseService<Review, ReviewCreateInput>{
   sortReviews(sortValue: string, desc: boolean) {
     return this.http.get<Review[]>(`${this.reviewsUrl}/sorted`, { params: { sortBy: sortValue, desc: desc } });
   }
+
+  //envoie les données en brut plutôt que d'envoyer un body (sinon mauvais affichage)
+  answerReview(id: string, response: string) {
+    return this.http.patch(
+      `${this.reviewsUrl}/${id}/response`,
+      response,
+      { headers: { 'Content-Type': 'text/plain' } }
+    );
+  }
+
+  rejectReview(id: string) {
+    return this.http.patch<void>(`${this.reviewsUrl}/${id}/reject`, {});
+  }
+
+  publishReview(id: string) {
+    return this.http.patch<void>(`${this.reviewsUrl}/${id}/publish`, {});
+  }
 }
