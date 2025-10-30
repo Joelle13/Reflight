@@ -11,4 +11,12 @@ export class FlightService extends BaseService<Flight, FlightCreateInput>{
     return "v1/flights";
   }
 
+  searchFlights(params: any) {
+    return this.http.get<Flight[]>(`${this.flightsUrl}/search`, { params });
+  }
+
+  sortFlights(sortValue: string, asc: boolean) {
+    return this.http.get<Flight[]>(`${this.flightsUrl}/sorted`, { params: { sortBy: sortValue, desc: asc } });
+
+  }
 }
