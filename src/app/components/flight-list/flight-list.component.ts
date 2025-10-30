@@ -16,4 +16,8 @@ export class FlightListComponent {
       this.flights = flights;
     })
   }
+
+  updateFlights(newFlights: Flight[]) {
+    this.flights = newFlights;
+  }
 }
