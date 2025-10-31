@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Airline} from "../../data/airline";
 import {AirlineService} from "../../services/airlineService";
 import {ReviewService} from "../../services/reviewService";
-import {SortBy} from "../utils/types";
+import {Mode, SortBy} from "../utils/types";
 import {Review} from "../../data/review";
 
 @Component({
@@ -24,6 +24,7 @@ export class ReviewSearchComponent {
   @Output() reviewsFound = new EventEmitter<Review[]>();
 
   private lastCriteria: any = {};
+  @Input() mode!: Mode;
 
   constructor(private reviewService: ReviewService, private airlineService: AirlineService) {}
 
@@ -32,6 +33,7 @@ export class ReviewSearchComponent {
       this.airlines = airlines;
     })
     this.loadReviews();
+    this.onSortChange();
   }
 
   onSearchReviews() {

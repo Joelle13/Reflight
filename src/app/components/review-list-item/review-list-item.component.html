@@ -34,9 +34,6 @@
     </div>
     <div class="review-meta">
       <span class="review-date">{{review.reviewDate | date:'dd/MM/yyyy'}}</span>
-      <span class="badge" [ngClass]="'badge-' + review.status">
-            {{getStatusLabel(review.status)}}
-      </span>
     </div>
   </div>
   </div>

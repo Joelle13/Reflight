@@ -32,7 +32,7 @@
         </select>
       </div>
 
-      <div class="filter-group">
+      <div class="filter-group" *ngIf="mode === 'admin'">
         <select
           class="filter-select"
           [(ngModel)]="filterStatus"
@@ -40,7 +40,7 @@
           <option value="">Tous les statuts</option>
           <option value="PUBLISHED">Publié</option>
           <option value="PROCESSED">Traité</option>
-          <option value="REJECTED">Rejeté</option>
+          <option value="REJECTED" >Rejeté</option>
         </select>
       </div>
     </div>

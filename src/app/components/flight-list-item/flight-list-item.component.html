@@ -199,7 +199,7 @@
             placeholder="Décrivez votre expérience de vol : confort, service, ponctualité, etc."
             maxlength="1000"></textarea>
           <div class="char-counter">
-            {{comments.value?.length || 0}} / 1000 caractères
+            {{comments.value.length || 0}} / 1000 caractères
           </div>
           <div *ngIf="comments?.invalid && comments.touched" class="invalid-feedback">
             <div *ngIf="comments?.errors?.['required']">Le commentaire est requis</div>
