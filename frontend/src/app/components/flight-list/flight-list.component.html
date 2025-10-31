@@ -1,0 +1,10 @@
+<app-flight-search (flightsFound)="updateFlights($event)"></app-flight-search>
+<div *ngIf="flights && flights.length">
+  <div *ngFor="let flight of flights">
+    <app-flight-list-item [flight]="flight"></app-flight-list-item>
+  </div>
+</div>
+
+<div *ngIf="!flights || flights.length === 0">
+  <p>Aucun vol pour cette recherche !</p>
+</div>

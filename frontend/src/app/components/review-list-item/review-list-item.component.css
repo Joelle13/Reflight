@@ -1,0 +1,812 @@
+/* Badge statut */
+.badge {
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.badge-PROCESSED {
+  background-color: #28a745;
+  color: white;
+}
+
+.badge-PUBLISHED {
+  background-color: #e3b48d;
+  color: #1a1a1a;
+}
+
+.badge-REJECTED {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* En-tête de l'avis avec fond coloré */
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 2rem 2rem 1.5rem;
+  gap: 1rem;
+}
+
+.review-author {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  flex: 1;
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.review {
+  background: linear-gradient(135deg, #e8f4fd 0%, #e5d4d6 100%);
+  border-radius: 15px;
+  margin-bottom: 1rem;
+}
+
+/* Nom avec barre rouge à gauche */
+.author-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #051039;
+  margin: 0;
+  font-family: 'Rubik', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.author-name::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 1.5rem;
+  background: #e31837; /* Barre rouge */
+  border-radius: 2px;
+}
+
+/* Rating avec étoiles */
+.review-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0;
+}
+
+.review-rating i {
+  color: #e0e0e0;
+  font-size: 1.4rem;
+  transition: all 0.2s ease;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.1));
+}
+
+.review-rating i.filled {
+  color: #ffc107;
+  animation: starPop 0.3s ease backwards;
+}
+
+.rating-value {
+  font-size: 0.95rem;
+  color: #495057;
+  font-weight: 700;
+  margin-left: 0.75rem;
+  padding: 0.375rem 0.875rem;
+  background: white;
+  border-radius: 25px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Animation des étoiles */
+@keyframes starPop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Métadonnées */
+.review-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.review-date {
+  font-size: 0.9rem;
+  color: #6c757d;
+  font-weight: 600;
+  padding: 0.375rem 0.875rem;
+}
+
+/* Contenu de l'avis */
+.review-content {
+  margin-top: 1rem;
+  padding: 0;
+}
+
+.review-text {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #051039;
+  line-height: 1.7;
+  margin: 0;
+  padding: 2rem;
+  background: white;
+  border-radius: 15px;
+}
+
+/* Info vol - Version améliorée */
+.review-flight-info {
+  display: grid;
+  grid-template-columns: auto auto 1fr auto auto;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.flight-info {
+  font-weight: 700;
+  color: #051039;
+  font-size: 1rem;
+  font-family: 'Rubik', sans-serif;
+  letter-spacing: 0.5px;
+  padding: 0.625rem 1.25rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+/* Icône avion */
+.review-flight-info .fa-plane {
+  color: #051039;
+  font-size: 1.5rem;
+  justify-self: center;
+  animation: flyPlane 2s ease-in-out infinite;
+}
+
+@keyframes flyPlane {
+  0%, 100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  50% {
+    transform: translateX(5px) rotate(2deg);
+  }
+}
+
+/* Container de la compagnie aérienne */
+.airline-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.3s ease;
+  justify-self: end;
+}
+
+.airline-info h3 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #495057;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.airline-info img {
+  height: 32px;
+  width: auto;
+  max-width: 80px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  transition: all 0.3s ease;
+}
+
+/* Message "No reviews" */
+.review-card p {
+  text-align: center;
+  color: #6c757d;
+  font-size: 1.1rem;
+  padding: 3rem;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .reviews-list {
+    gap: 2rem;
+  }
+
+  .review-flight-info {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .flight-info,
+  .airline-info {
+    justify-self: stretch;
+  }
+
+  .review-flight-info .fa-plane {
+    justify-self: center;
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .reviews-list {
+    gap: 1.5rem;
+  }
+
+  .review-card {
+    border-radius: 12px;
+  }
+
+  .review-card::before {
+    width: 4px;
+  }
+
+  .review-header {
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+
+  .review-meta {
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .author-name {
+    font-size: 1.2rem;
+  }
+
+  .author-name::before {
+    height: 1.3rem;
+  }
+
+  .review-rating i {
+    font-size: 1.2rem;
+  }
+
+  .review-text {
+    padding: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .review-flight-info {
+    padding: 1.5rem;
+  }
+
+  .flight-info {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .airline-info {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .airline-info h3 {
+    font-size: 0.85rem;
+  }
+
+  .airline-info img {
+    height: 28px;
+  }
+
+  .review-status-badge {
+    top: 1rem;
+    right: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .author-name {
+    font-size: 1.1rem;
+  }
+
+  .author-name::before {
+    height: 1.2rem;
+    width: 3px;
+  }
+
+  .review-rating i {
+    font-size: 1.1rem;
+  }
+
+  .rating-value {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.625rem;
+  }
+
+  .review-date {
+    font-size: 0.85rem;
+  }
+
+  .flight-info {
+    font-size: 0.85rem;
+  }
+}
+
+/* Réponse admin */
+.admin-response {
+  background: white;
+  border-left: 4px solid #e31837;
+  padding: 1.25rem 1.5rem;
+  border-radius: 12px;
+  margin: 1.5rem 2rem;
+  box-shadow: 0 2px 8px rgba(0, 102, 204, 0.1);
+}
+
+.response-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.response-header i {
+  color: #051039;
+  font-size: 1.1rem;
+}
+
+.response-label {
+  font-weight: 700;
+  color: #051039;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.response-text {
+  color: #051039;
+  line-height: 1.7;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* Actions admin */
+.review-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 1.5rem 2rem;
+  flex-wrap: wrap;
+  border-radius: 16px 16px 16px 16px;
+}
+
+.btn-action {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  font-family: inherit;
+}
+
+.btn-action i {
+  font-size: 0.9rem;
+}
+
+.btn-action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-action:active {
+  transform: translateY(0);
+}
+
+.btn-respond {
+  background: linear-gradient(135deg, #051039, #08396b);
+  color: white;
+}
+
+.btn-respond:hover {
+  background: linear-gradient(135deg, #0052a3, #003d7a);
+}
+
+.btn-edit {
+  background: linear-gradient(135deg, #051039, #5a6268);
+  color: white;
+}
+
+.btn-edit:hover {
+  background: linear-gradient(135deg, #5a6268, #495057);
+}
+
+.btn-approve {
+  background: linear-gradient(135deg, #20522b, #218838);
+  color: white;
+}
+
+.btn-approve:hover {
+  background: linear-gradient(135deg, #218838, #1e7e34);
+}
+
+.btn-reject {
+  background: linear-gradient(135deg, #ccb274, #e0a800);
+  color: #1a1a1a;
+}
+
+.btn-reject:hover {
+  background: linear-gradient(135deg, #e0a800, #c69500);
+}
+
+.btn-delete {
+  background: linear-gradient(135deg, #6b1a23, #c82333);
+  color: white;
+}
+
+.btn-delete:hover {
+  background: linear-gradient(135deg, #c82333, #bd2130);
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.3s ease;
+  padding: 1rem;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 650px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+.modal-small {
+  max-width: 450px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.75rem 2rem;
+  border-bottom: 2px solid #e9ecef;
+  background: linear-gradient(135deg, #f8f9fa, #ffffff);
+}
+
+.modal-header h3 {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.btn-close {
+  background: #f8f9fa;
+  border: none;
+  font-size: 1.25rem;
+  color: #6c757d;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.btn-close:hover {
+  color: #dc3545;
+  background: #ffe5e8;
+  transform: rotate(90deg);
+}
+
+.modal-body {
+  padding: 2rem;
+}
+
+.review-preview {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  padding: 1.25rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #0066cc;
+}
+
+.review-preview strong {
+  color: #1a1a1a;
+  font-size: 1.05rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.preview-rating {
+  display: flex;
+  gap: 0.25rem;
+  margin: 0.5rem 0;
+}
+
+.preview-rating i {
+  color: #dee2e6;
+  font-size: 1rem;
+}
+
+.preview-rating i.filled {
+  color: #ffc107;
+}
+
+.preview-text {
+  color: #495057;
+  margin: 0.75rem 0 0 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.response-textarea {
+  width: 100%;
+  padding: 1.25rem;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+  transition: all 0.3s ease;
+  line-height: 1.6;
+}
+
+.response-textarea:focus {
+  outline: none;
+  border-color: #0066cc;
+  box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
+}
+
+.response-textarea::placeholder {
+  color: #adb5bd;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+  border-top: 2px solid #e9ecef;
+  background: #f8f9fa;
+  border-radius: 0 0 16px 16px;
+}
+
+.btn-cancel {
+  padding: 0.75rem 1.75rem;
+  border: 2px solid #e9ecef;
+  background: white;
+  color: #495057;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.btn-cancel:hover {
+  background: #f8f9fa;
+  border-color: #dee2e6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-submit {
+  padding: 0.75rem 1.75rem;
+  border: none;
+  background: linear-gradient(135deg, #0066cc, #0052a3);
+  color: white;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.btn-submit:hover {
+  background: linear-gradient(135deg, #0052a3, #003d7a);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+}
+
+.btn-delete-confirm {
+  padding: 0.75rem 1.75rem;
+  border: none;
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: white;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.btn-delete-confirm:hover {
+  background: linear-gradient(135deg, #c82333, #bd2130);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+.warning-text {
+  color: #856404;
+  background: #fff3cd;
+  padding: 1.25rem;
+  border-radius: 10px;
+  border-left: 4px solid #ffc107;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.warning-text i {
+  font-size: 1.75rem;
+  color: #ffc107;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .admin-mode-toggle {
+    top: 70px;
+    right: 1rem;
+  }
+
+  .toggle-container {
+    padding: 0.625rem 1.25rem;
+  }
+
+  .toggle-label {
+    font-size: 0.85rem;
+  }
+
+  .switch {
+    width: 48px;
+    height: 26px;
+  }
+
+  .slider:before {
+    height: 20px;
+    width: 20px;
+  }
+
+  input:checked + .slider:before {
+    transform: translateX(22px);
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-mode-toggle {
+    position: relative;
+    top: 0;
+    right: 0;
+    margin: 1rem auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .review-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .btn-action {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .admin-response {
+    margin: 1.5rem 1rem;
+    padding: 1rem;
+  }
+
+  .modal-content {
+    width: 95%;
+  }
+
+  .modal-header {
+    padding: 1.5rem;
+  }
+
+  .modal-header h3 {
+    font-size: 1.3rem;
+  }
+
+  .modal-body {
+    padding: 1.5rem;
+  }
+
+  .modal-footer {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .btn-cancel,
+  .btn-submit,
+  .btn-delete-confirm {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .toggle-label {
+    display: none;
+  }
+
+  .toggle-container {
+    padding: 0.5rem;
+  }
+
+  .review-actions {
+    padding: 1.25rem 1rem;
+  }
+}

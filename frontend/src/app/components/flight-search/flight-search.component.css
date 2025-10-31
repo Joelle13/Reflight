@@ -1,0 +1,344 @@
+html, body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+  /* Section de recherche*/
+.search-section {
+  position: relative;
+  min-height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 0;
+  margin: 0 calc(50% - 50vw);
+  width: 99.5vw;
+  overflow: hidden;
+}
+
+/* Image de fond */
+.search-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/background.png');
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.search-overlay {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Formulaire de recherche */
+.search-form {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+/* Groupes d'input */
+.input-group {
+  flex: 1;
+  min-width: 200px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Bouton de recherche */
+.btn-search {
+  flex-shrink: 0;
+  background: #051039;
+  color: white;
+  border: none;
+  padding: 0.875rem 2.5rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+  white-space: nowrap;
+}
+
+.btn-search:hover {
+  background: #051039;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(7, 48, 93, 0.4);
+}
+
+.btn-search:active {
+  transform: translateY(0);
+}
+
+/* Icônes DANS les inputs */
+.input-group i {
+  position: absolute;
+  left: 1rem;
+  bottom: 1.1rem;
+  color: #051039;
+  font-size: 1rem;
+  pointer-events: none;
+  z-index: 2;
+  transition: color 0.3s ease;
+}
+
+/* Inputs avec icônes intégrées */
+.input-group input {
+  width: 100%;
+  padding: 0.875rem 1rem 0.875rem 2.75rem;
+  border: 2px solid #e9ecef;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: white;
+  color: #212529;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #0066cc;
+  box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
+}
+
+.input-group input::placeholder {
+  color: #adb5bd;
+  font-weight: 400;
+}
+
+/* Input de type date */
+.input-group input[type="date"] {
+  cursor: pointer;
+  color: #495057;
+}
+
+.input-group input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: opacity(0.6);
+  transition: filter 0.3s ease;
+}
+
+.input-group input[type="date"]:hover::-webkit-calendar-picker-indicator {
+  filter: opacity(1);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .search-form {
+    padding: 2rem;
+    gap: 1rem;
+  }
+
+  .input-group {
+    flex: 1 1 calc(50% - 0.5rem);
+    min-width: 180px;
+  }
+
+  .btn-search {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .search-section {
+    min-height: 300px;
+    padding: 2rem 1rem;
+  }
+
+  .search-form {
+    padding: 1.5rem;
+  }
+
+  .input-group {
+    flex: 1 1 100%;
+  }
+}
+
+/* Section des résultats */
+.results-section {
+  padding: 2rem 0 1.5rem;
+  margin-top: -1px;
+}
+
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+/* Compteur de vols */
+.results-count {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.results-count i {
+  font-size: 1.75rem;
+  color: #051039;
+}
+
+.results-count h2 {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #051039;
+  margin: 0;
+}
+
+.results-count h2::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 1.5rem;
+  background-color: #e31837;
+  margin-right: 0.75rem;
+  vertical-align: middle;
+}
+
+
+.results-sort label {
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 1rem;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .results-section {
+    padding: 1.5rem 0 1rem;
+  }
+
+  .results-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .results-count {
+    width: 100%;
+  }
+
+  .results-count i {
+    font-size: 1.5rem;
+  }
+
+  .results-count h2 {
+    font-size: 1.3rem;
+  }
+
+  .results-sort {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sort-select {
+    width: 100%;
+    min-width: auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .results-count h2 {
+    font-size: 1.2rem;
+  }
+
+  .results-count i {
+    font-size: 1.3rem;
+  }
+}
+
+.filter-select {
+  width: 100%;
+  padding: 0.875rem 2.5rem 0.875rem 2.5rem;
+  border: 2px solid #e9ecef;
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgb(5, 16, 57);
+  background-color: white;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  appearance: none;
+}
+
+.filter-select:hover {
+  border-color: #051039;
+  box-shadow: 0 2px 8px rgba(0, 102, 204, 0.1);
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #051039;
+  box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
+}
+
+.sort-select {
+  padding: 0.75rem 2.75rem 0.75rem 1.25rem;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #212529;
+  background-color: white;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%230066cc' d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  appearance: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  min-width: 220px;
+  margin-left: 1rem;
+}
+
+.sort-select:hover {
+  border-color: #0066cc;
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.15);
+  transform: translateY(-1px);
+}
+
+.sort-select:focus {
+  outline: none;
+  border-color: #0066cc;
+  box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
+}
+
+.results-sort label {
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 1rem;
+}
