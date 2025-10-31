@@ -19,5 +19,12 @@ Construit avec **Spring Boot**, **Spring Web**, **Spring Data JPA** et **Postgre
 - Maven
 - Lombok
 
+## ✅ Fonctionnalités
 
+- 🔐 Gestion utilisateurs basique
+- 💬 Avis sur les vols
+- 📊 Compteurs d'avis
+- 🔎 Recherche multi-critères
+- 🎛️ Tri des avis et des vols selon plusieurs critères
+- 🛠️ Exceptions globales
   
