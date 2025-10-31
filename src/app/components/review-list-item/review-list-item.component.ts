@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Review} from "../../data/review";
-import {Mode} from "../types/types";
+import {Mode} from "../utils/types";
 import {ReviewService} from "../../services/reviewService";
 
 @Component({

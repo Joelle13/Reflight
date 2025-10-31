@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {Review} from "../../data/review";
 import {ReviewService} from "../../services/reviewService";
-import {Mode} from "../types/types";
+import {Mode} from "../utils/types";
 import {ReviewSearchComponent} from "../review-search/review-search.component";
 
 @Component({

@@ -43,9 +43,6 @@ export default abstract class BaseService<ENTITY, ENTITY_CREATE_INPUT> {
   }
 
   create(entity: ENTITY_CREATE_INPUT): Observable<ENTITY> {
-    return this.http.post<ENTITY>(`${this.baseUrl}${this.getEndpointUrl()}`, entity)
-      .pipe(
-        catchError(this.handleError<ENTITY>('create', undefined))
-      );
+    return this.http.post<ENTITY>(`${this.baseUrl}${this.getEndpointUrl()}`, entity);
   }
 }
