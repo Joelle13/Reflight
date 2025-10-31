@@ -1,4 +1,4 @@
-# ✈️ Air France - Flight Reviews (Frontend)
+# ✈️ Reflights - Flight reviews - frontend
 
 Application web permettant aux utilisateurs de consulter et publier des avis sur des vols.
 Ce repository contient la partie **frontend**, développée avec **Angular**, **TypeScript**, **HTML/CSS** et **Bootstrap**.
@@ -22,9 +22,9 @@ Ce repository contient la partie **frontend**, développée avec **Angular**, **
 
 ## ✅ Fonctionnalités 
 
-🔍 Recherche de vols & avis
-👍 Ajout d'avis utilisateur
-🛡️ Mode administrateur
-✅ Validation formulaires
+- 🔍 Recherche de vols & avis
+- 👍 Ajout d'avis utilisateur
+- 🛡️ Mode administrateur
+- ✅ Validation formulaires
 
   
