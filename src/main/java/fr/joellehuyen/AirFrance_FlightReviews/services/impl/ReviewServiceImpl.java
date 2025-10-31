@@ -2,6 +2,7 @@ package fr.joellehuyen.AirFrance_FlightReviews.services.impl;
 
 import fr.joellehuyen.AirFrance_FlightReviews.dtos.ReviewDto;
 import fr.joellehuyen.AirFrance_FlightReviews.exceptions.FlightNotFoundException;
+import fr.joellehuyen.AirFrance_FlightReviews.exceptions.ReviewAlreadyExistException;
 import fr.joellehuyen.AirFrance_FlightReviews.exceptions.ReviewNotFoundException;
 import fr.joellehuyen.AirFrance_FlightReviews.exceptions.UserNotFoundException;
 import fr.joellehuyen.AirFrance_FlightReviews.models.Flight;
@@ -38,6 +39,9 @@ public class ReviewServiceImpl implements ReviewService {
                 .orElseThrow(() -> new UserNotFoundException(review.getUserId()));
         Flight flight = flightRepository.findById(review.getFlightId().toUpperCase())
                 .orElseThrow(() -> new FlightNotFoundException(review.getFlightId()));
+        if (reviewRepository.findByUser_idAndFlight_id(user.getId(), flight.getId()).isPresent()) {
+            throw new ReviewAlreadyExistException(user, flight.getId());
+        }
         Review newReview = new Review(user, flight, review.getRating(), review.getComments());
         return reviewRepository.save(newReview);
     }
@@ -84,6 +88,27 @@ public class ReviewServiceImpl implements ReviewService {
         Sort sort = buildSort(sortBy, desc);
         return reviewRepository.findAll(sort);
 
+    }
+
+    @Override
+    public long countReviewsByFlightId(String flightId) {
+        return reviewRepository.countByFlight_FlightId(flightId.toUpperCase());
+    }
+
+    @Override
+    public Review rejectReview(String id) {
+        Review review = reviewRepository.findById(id)
+                .orElseThrow(() -> new ReviewNotFoundException(id));
+        review.setStatus(ReviewStatus.REJECTED);
+        return reviewRepository.save(review);
+    }
+
+    @Override
+    public Review publishReview(String id) {
+        Review review = reviewRepository.findById(id)
+                .orElseThrow(() -> new ReviewNotFoundException(id));
+        review.setStatus(ReviewStatus.PUBLISHED);
+        return reviewRepository.save(review);
     }
 
     private Sort buildSort(String sortBy, boolean desc) {

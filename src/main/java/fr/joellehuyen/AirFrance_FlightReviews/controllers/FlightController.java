@@ -1,6 +1,7 @@
 package fr.joellehuyen.AirFrance_FlightReviews.controllers;
 
 import fr.joellehuyen.AirFrance_FlightReviews.dtos.FlightDto;
+import fr.joellehuyen.AirFrance_FlightReviews.dtos.RequestFlightDto;
 import fr.joellehuyen.AirFrance_FlightReviews.models.Flight;
 import fr.joellehuyen.AirFrance_FlightReviews.services.FlightService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -37,7 +38,7 @@ public class FlightController {
 
     @Operation (summary = "Create a new flight", description = "Create a new flight with the provided details")
     @PostMapping
-    public ResponseEntity<FlightDto> createFlight(@RequestBody FlightDto flightDto) {
+    public ResponseEntity<FlightDto> createFlight(@RequestBody RequestFlightDto flightDto) {
         Flight flight = flightService.createFlight(flightDto);
         return ResponseEntity.ok(FlightDto.mapToDTO(flight));
     }
@@ -60,6 +61,7 @@ public class FlightController {
         return ResponseEntity.ok(flightDtos);
     }
 
+    @Operation (summary = "Get sorted flights", description = "Retrieve a list of flights sorted by the specified attribute")
     @GetMapping("/sorted")
     public ResponseEntity<List<FlightDto>> sortedFlights(
             @RequestParam String sortBy,
@@ -71,4 +73,12 @@ public class FlightController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(flightsDtos);
     }
+
+    @Operation (summary = "Delete a flight", description = "Delete a flight by its ID")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteFlight(@PathVariable String id) {
+        flightService.deleteFlightById(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

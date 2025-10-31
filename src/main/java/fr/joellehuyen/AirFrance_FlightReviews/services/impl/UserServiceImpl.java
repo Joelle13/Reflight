@@ -1,6 +1,7 @@
 package fr.joellehuyen.AirFrance_FlightReviews.services.impl;
 
 import fr.joellehuyen.AirFrance_FlightReviews.dtos.UserDto;
+import fr.joellehuyen.AirFrance_FlightReviews.exceptions.UserNotFoundException;
 import fr.joellehuyen.AirFrance_FlightReviews.models.User;
 import fr.joellehuyen.AirFrance_FlightReviews.repositories.UserRepository;
 import fr.joellehuyen.AirFrance_FlightReviews.services.UserService;
@@ -28,5 +29,11 @@ public class UserServiceImpl implements UserService {
         newUser.setLastName(user.getLastName());
         newUser.setEmail(user.getEmail());
         return userRepository.save(newUser);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException(email));
     }
 }

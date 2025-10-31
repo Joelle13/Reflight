@@ -1,6 +1,7 @@
 package fr.joellehuyen.AirFrance_FlightReviews.services.impl;
 
 import fr.joellehuyen.AirFrance_FlightReviews.dtos.FlightDto;
+import fr.joellehuyen.AirFrance_FlightReviews.dtos.RequestFlightDto;
 import fr.joellehuyen.AirFrance_FlightReviews.exceptions.AirlineNotFoundException;
 import fr.joellehuyen.AirFrance_FlightReviews.exceptions.FlightNotFoundException;
 import fr.joellehuyen.AirFrance_FlightReviews.models.Airline;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -28,12 +30,10 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public Flight createFlight(FlightDto flightDto) {
-        Airline airline = airlineRepository.findByName(flightDto.getAirlineName().toUpperCase());
-        if(airline == null){
-            throw new AirlineNotFoundException(flightDto.getAirlineName());
-        }
-        Flight flight = FlightDto.mapToEntity(flightDto, airline);
+    public Flight createFlight(RequestFlightDto flightDto) {
+        Airline airline = airlineRepository.findById(flightDto.getAirlineId())
+                .orElseThrow(() -> new AirlineNotFoundException(flightDto.getAirlineId()));
+        Flight flight = RequestFlightDto.mapToEntity(flightDto, airline);
         return flightRepository.save(flight);
     }
 
@@ -54,6 +54,13 @@ public class FlightServiceImpl implements FlightService {
     public List<Flight> getSortedFlights(String sortBy, boolean desc) {
         Sort sort = buildSort(sortBy, desc);
         return flightRepository.findAll(sort);
+    }
+
+    @Override
+    public void deleteFlightById(String id) {
+        Flight flight = flightRepository.findById(id)
+                .orElseThrow(() -> new FlightNotFoundException(id));
+        flightRepository.delete(flight);
     }
 
     private Sort buildSort(String sortBy, boolean desc) {
