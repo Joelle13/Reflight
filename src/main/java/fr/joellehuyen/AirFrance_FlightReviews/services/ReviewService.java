@@ -22,4 +22,8 @@ public interface ReviewService {
     List<Review> getSortedReviews(String sortBy, boolean desc);
 
     long countReviewsByFlightId(String flightId);
+
+    Review rejectReview(String id);
+
+    Review publishReview(String id);
 }

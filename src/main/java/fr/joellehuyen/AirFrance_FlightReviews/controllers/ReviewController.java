@@ -41,9 +41,26 @@ public class ReviewController {
     }
 
     @Operation (summary = "To answer a review")
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}/response")
     public ResponseEntity<ReviewResponseDto> answerReview(@PathVariable String id, @RequestBody String answer) {
+        System.out.println("Answer received: " + answer);
         Review review = reviewService.answerReview(id, answer);
+        ReviewResponseDto responseDto = ReviewResponseDto.mapToDTO(review);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    @Operation (summary = "To reject a review")
+    @PatchMapping("/{id}/reject")
+    public ResponseEntity<ReviewResponseDto> rejectReview(@PathVariable String id) {
+        Review review = reviewService.rejectReview(id);
+        ReviewResponseDto responseDto = ReviewResponseDto.mapToDTO(review);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    @Operation (summary = "To publish a review")
+    @PatchMapping("/{id}/publish")
+    public ResponseEntity<ReviewResponseDto> publishReview(@PathVariable String id) {
+        Review review = reviewService.publishReview(id);
         ReviewResponseDto responseDto = ReviewResponseDto.mapToDTO(review);
         return ResponseEntity.ok(responseDto);
     }
