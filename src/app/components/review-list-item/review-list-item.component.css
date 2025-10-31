@@ -80,7 +80,6 @@
   align-items: flex-start;
   padding: 2rem 2rem 1.5rem;
   gap: 1rem;
-  border-bottom: 2px solid #dee2e6;
 }
 
 .review-author {
@@ -98,7 +97,9 @@
 }
 
 .review {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #f8f9fa 100%);
+  background: linear-gradient(135deg, #e8f4fd 0%, #e5d4d6 100%);
+  border-radius: 15px;
+  margin-bottom: 10px;
 }
 
 /* Nom avec barre rouge à gauche */

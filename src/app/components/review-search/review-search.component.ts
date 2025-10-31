@@ -2,7 +2,7 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {Airline} from "../../data/airline";
 import {AirlineService} from "../../services/airlineService";
 import {ReviewService} from "../../services/reviewService";
-import {SortBy} from "../types/types";
+import {SortBy} from "../utils/types";
 import {Review} from "../../data/review";
 
 @Component({

@@ -5,8 +5,8 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {AirlineService} from "../../services/airlineService";
 import {FlightService} from "../../services/flightService";
 import {Router} from "@angular/router";
-import Swal from "sweetalert2";
 import {dateNotAfterTodayValidator} from "../../validators/custom-validators";
+import {displayToast} from "../utils/functions";
 
 @Component({
   selector: 'app-add-flight-form',
@@ -15,7 +15,6 @@ import {dateNotAfterTodayValidator} from "../../validators/custom-validators";
 })
 export class AddFlightFormComponent {
   airlines: Airline[] = [];
-  minDate: string = new Date().toISOString().split('T')[0];
   flightCreateInput! : FlightCreateInput;
 
   constructor(private formBuilder: FormBuilder, private airlineService: AirlineService, private flightService: FlightService, private router: Router) {}
@@ -100,36 +99,11 @@ export class AddFlightFormComponent {
       this.flightService
         .create(this.flightCreateInput)
         .subscribe(() => {
-          this.router.navigate(['/'])
-          this.displayToast(true, "Vol créé avec succès !");
+          this.router.navigate(['/']).then(() => window.location.reload())
+          displayToast(true, "Vol créé avec succès !");
         });
     } else {
-      this.displayToast(false, "Veuillez vérifier votre formulaire de création de vol");
-    }
-  }
-
-  displayToast(valid : boolean, message : string){
-    const Toast = Swal.mixin({
-      toast: true,
-      position: "top",
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.onmouseenter = Swal.stopTimer;
-        toast.onmouseleave = Swal.resumeTimer;
-      }
-    });
-    if(valid){
-      Toast.fire({
-        icon: 'success',
-        title: message
-      });
-    } else{
-      Toast.fire({
-        icon: 'error',
-        title: message
-      })
+      displayToast(false, "Veuillez vérifier votre formulaire de création de vol");
     }
   }
 
@@ -138,14 +112,16 @@ export class AddFlightFormComponent {
       this.flightService.delete(this.deleteFlight.value.flightNumber ?? '')
         .subscribe( {
           next: () => {
-            this.router.navigate(['/'])
-            this.displayToast(true, "Vol supprimé avec succès !");
+            this.router.navigate(['/']).then(() => window.location.reload())
+            displayToast(true, "Vol supprimé avec succès !");
           },
           error: (err) => {
             console.error('Erreur lors de la suppression', err);
-            this.displayToast(false, "Aucun vol trouvé avec ce numéro !");
+            displayToast(false, "Aucun vol trouvé avec ce numéro !");
           }
         })
+    } else {
+      displayToast(false, "Veuillez inscrire un numéro de vol valide !");
     }
   }
 

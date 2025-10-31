@@ -10,4 +10,8 @@ export class UserService extends BaseService<User, UserCreateInput>{
   getEndpointUrl(): string {
     return "v1/users";
   }
+
+  findByEmail(email: string) {
+    return this.http.get<User>(`${this.usersUrl}/email/${email}`);
+  }
 }
