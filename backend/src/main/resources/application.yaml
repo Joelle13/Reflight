@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: flight-service
+  datasource:
+    url: jdbc:postgresql://ep-damp-star-agmeqt8o-pooler.c-2.eu-central-1.aws.neon.tech:5432/FlightReviews
+    username: neondb_owner
+    password: npg_u1bUmwsQz4tX
+
+  jpa:
+    database: postgresql
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
