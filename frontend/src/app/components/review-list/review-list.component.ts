@@ -15,17 +15,19 @@ export class ReviewListComponent {
 
   @ViewChild(ReviewSearchComponent)
   reviewSearch!: ReviewSearchComponent;
+  loading: boolean = true
 
   constructor(private reviewService: ReviewService) {}
   ngOnInit(): void {
     this.reviewService.getAll().subscribe(reviews => {
       this.reviews = reviews;
-    })
+      this.loading = false;
+    });
   }
 
   onToggleMode(checked: boolean) {
     this.mode = checked ? 'admin' : 'user';
-    console.log(this.mode);
+    this.reviewSearch.resetSearch();
   }
 
   updateReviews(newReviews: Review[]) {
@@ -38,5 +40,9 @@ export class ReviewListComponent {
     } else {
       this.reviewService.getAll().subscribe(r => this.reviews = r);
     }
+  }
+
+  resetSearch() {
+    this.reviewSearch.resetSearch();
   }
 }

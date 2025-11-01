@@ -98,3 +98,299 @@ input:focus + .slider {
     transform: translateX(0);
   }
 }
+/* Container du spinner */
+.spinner-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(248, 249, 250, 0.95);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Wrapper central */
+.spinner-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Spinner principal */
+.spinner {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Cercle externe animé */
+.spinner::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 4px solid #e9ecef;
+  border-top-color: #e31837;
+  border-right-color: #0066cc;
+  border-radius: 50%;
+  animation: spinRotate 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+}
+
+/* Cercle interne animé */
+.spinner::after {
+  content: '';
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  border: 4px solid transparent;
+  border-left-color: #0066cc;
+  border-bottom-color: #e31837;
+  border-radius: 50%;
+  animation: spinRotate 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite reverse;
+}
+
+/* Icône avion au centre */
+.spinner-plane {
+  position: relative;
+  z-index: 1;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #0066cc, #0052a3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+  animation: planePulse 1.5s ease-in-out infinite;
+}
+
+.spinner-plane i {
+  color: white;
+  font-size: 1.5rem;
+  animation: planeMove 2s ease-in-out infinite;
+}
+
+/* Texte de chargement */
+.spinner-text {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #495057;
+  margin: 0;
+  animation: textPulse 1.5s ease-in-out infinite;
+}
+
+/* Animation de rotation */
+@keyframes spinRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Animation de pulse pour l'avion */
+@keyframes planePulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 102, 204, 0.5);
+  }
+}
+
+/* Animation de mouvement pour l'icône */
+@keyframes planeMove {
+  0%, 100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  25% {
+    transform: translateX(3px) rotate(5deg);
+  }
+  75% {
+    transform: translateX(-3px) rotate(-5deg);
+  }
+}
+
+/* Animation du texte */
+@keyframes textPulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Animation d'apparition */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Container aucun résultat */
+.no-results {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  padding: 3rem 2rem;
+  border-radius: 16px;
+  margin: 2rem 0;
+}
+
+.no-results-content {
+  text-align: center;
+  max-width: 500px;
+  animation: fadeInUp 0.6s ease;
+}
+
+/* Icône */
+.no-results-icon {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 2rem;
+  background: linear-gradient(135deg, #e9ecef, #dee2e6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  animation: iconBounce 2s ease-in-out infinite;
+}
+
+.no-results-icon::before {
+  content: '';
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  border: 2px dashed #cbd5e0;
+  border-radius: 50%;
+  animation: rotate 8s linear infinite;
+}
+
+.no-results-icon i {
+  font-size: 2.5rem;
+  color: #6c757d;
+}
+
+/* Titre */
+.no-results-title {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 700;
+  font-size: 1.75rem;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+}
+
+/* Texte */
+.no-results-text {
+  font-size: 1.05rem;
+  color: #6c757d;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+/* Bouton reset */
+.btn-reset {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 2rem;
+  background: #051039;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+}
+
+.btn-reset:hover {
+  background: linear-gradient(135deg, #0052a3, #003d7a);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 102, 204, 0.4);
+}
+
+.btn-reset i {
+  font-size: 1rem;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes iconBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .no-results {
+    min-height: 300px;
+    padding: 2rem 1rem;
+  }
+
+  .no-results-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1.5rem;
+  }
+
+  .no-results-icon i {
+    font-size: 2rem;
+  }
+
+  .no-results-title {
+    font-size: 1.5rem;
+  }
+
+  .no-results-text {
+    font-size: 1rem;
+  }
+
+  .btn-reset {
+    width: 100%;
+    justify-content: center;
+  }
+}

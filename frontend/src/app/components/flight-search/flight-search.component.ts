@@ -28,7 +28,7 @@ export class FlightSearchComponent {
     this.flightService.getAll().subscribe(flights => {
       this.flights = flights;
     })
-    this.onSortChange({target: {value: 'date'}})
+    this.onSortChange({target: {value: 'DATE-desc'}})
   }
 
 
@@ -59,15 +59,22 @@ export class FlightSearchComponent {
 
   onSortChange(event: any) {
     let sortValue = event.target.value;
-    let direction = true;
-    if(sortValue ==='date-asc'){
-      sortValue = 'date';
-      direction = false;
+    let direction = false;
+    if(sortValue ==='DATE-desc'){
+      sortValue = 'DATE';
+      direction = true;
     }
     this.flightService.sortFlights(sortValue, direction).subscribe(sortedFlights => {
       this.flights = sortedFlights;
       this.flightsFound.emit(this.flights);
     }
     );
+  }
+
+  resetSearch() {
+    this.flightNumber = '';
+    this.airline = '';
+    this.date = '';
+    this.onSearch();
   }
 }
