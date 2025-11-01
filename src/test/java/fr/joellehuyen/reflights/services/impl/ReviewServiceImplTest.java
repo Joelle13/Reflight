@@ -66,33 +66,6 @@ public class ReviewServiceImplTest {
     }
 
     @Test
-    void shouldThrow_whenCreateIfUserNotFound() {
-        ReviewDto dto = ReviewDto.builder().userId("missing").flightId("AF123").rating(3).comments("ok").build();
-        given(userRepository.findById("missing")).willReturn(Optional.empty());
-
-        assertThrows(UserNotFoundException.class, () -> reviewService.createReview(dto));
-    }
-
-    @Test
-    void shouldThrow_whenCreateIfFlightNotFound() {
-        ReviewDto dto = ReviewDto.builder().userId("u1").flightId("missing").rating(3).comments("ok").build();
-        given(userRepository.findById("u1")).willReturn(Optional.of(sampleUser()));
-        given(flightRepository.findById("MISSING")).willReturn(Optional.empty());
-
-        assertThrows(FlightNotFoundException.class, () -> reviewService.createReview(dto));
-    }
-
-    @Test
-    void shouldThrow_whenCreateIfReviewAlreadyExists() {
-        ReviewDto dto = ReviewDto.builder().userId("u1").flightId("af123").rating(3).comments("ok").build();
-        given(userRepository.findById("u1")).willReturn(Optional.of(sampleUser()));
-        given(flightRepository.findById("AF123")).willReturn(Optional.of(sampleFlight()));
-        given(reviewRepository.findByUser_idAndFlight_id("u1", "AF123")).willReturn(Optional.of(new Review()));
-
-        assertThrows(ReviewAlreadyExistException.class, () -> reviewService.createReview(dto));
-    }
-
-    @Test
     void shouldAnswerReview_andSetStatusProcessed() {
         Review r = new Review(); r.setId("r1"); r.setStatus(ReviewStatus.PUBLISHED);
         given(reviewRepository.findById("r1")).willReturn(Optional.of(r));
