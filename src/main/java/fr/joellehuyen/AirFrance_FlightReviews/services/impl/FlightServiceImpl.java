@@ -63,6 +63,12 @@ public class FlightServiceImpl implements FlightService {
         flightRepository.delete(flight);
     }
 
+    @Override
+    public Flight findById(String id) {
+        return flightRepository.findById(id)
+                .orElseThrow(() -> new FlightNotFoundException(id));
+    }
+
     private Sort buildSort(String sortBy, boolean desc) {
         Sort.Direction direction = desc ? Sort.Direction.DESC : Sort.Direction.ASC;
         return switch (sortBy) {

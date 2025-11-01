@@ -9,10 +9,10 @@ import fr.joellehuyen.AirFrance_FlightReviews.models.Flight;
 import fr.joellehuyen.AirFrance_FlightReviews.models.Review;
 import fr.joellehuyen.AirFrance_FlightReviews.models.ReviewStatus;
 import fr.joellehuyen.AirFrance_FlightReviews.models.User;
-import fr.joellehuyen.AirFrance_FlightReviews.repositories.FlightRepository;
 import fr.joellehuyen.AirFrance_FlightReviews.repositories.ReviewRepository;
-import fr.joellehuyen.AirFrance_FlightReviews.repositories.UserRepository;
+import fr.joellehuyen.AirFrance_FlightReviews.services.FlightService;
 import fr.joellehuyen.AirFrance_FlightReviews.services.ReviewService;
+import fr.joellehuyen.AirFrance_FlightReviews.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -25,8 +25,8 @@ import java.util.List;
 public class ReviewServiceImpl implements ReviewService {
 
     private  final ReviewRepository reviewRepository;
-    private final UserRepository userRepository;
-    private final FlightRepository flightRepository;
+    private final UserService userService;
+    private final FlightService flightService;
 
     @Override
     public List<Review> getAllReviews() {
@@ -35,10 +35,8 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Review createReview(ReviewDto review) {
-        User user = userRepository.findById(review.getUserId())
-                .orElseThrow(() -> new UserNotFoundException(review.getUserId()));
-        Flight flight = flightRepository.findById(review.getFlightId().toUpperCase())
-                .orElseThrow(() -> new FlightNotFoundException(review.getFlightId()));
+        User user = userService.findById(review.getUserId());
+        Flight flight = flightService.findById(review.getFlightId().toUpperCase());
         if (reviewRepository.findByUser_idAndFlight_id(user.getId(), flight.getId()).isPresent()) {
             throw new ReviewAlreadyExistException(user, flight.getId());
         }

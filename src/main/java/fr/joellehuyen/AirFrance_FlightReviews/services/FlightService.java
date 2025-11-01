@@ -6,6 +6,7 @@ import fr.joellehuyen.AirFrance_FlightReviews.models.Flight;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface FlightService {
     List<Flight> findAll();
@@ -16,4 +17,6 @@ public interface FlightService {
     List<Flight> getSortedFlights(String sortBy, boolean desc);
 
     void deleteFlightById(String id);
+
+    Flight findById(String upperCase);
 }
