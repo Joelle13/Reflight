@@ -1,10 +1,6 @@
 package fr.joellehuyen.reflights.services.impl;
 
-import fr.joellehuyen.reflights.dtos.ReviewDto;
-import fr.joellehuyen.reflights.exceptions.FlightNotFoundException;
-import fr.joellehuyen.reflights.exceptions.ReviewAlreadyExistException;
 import fr.joellehuyen.reflights.exceptions.ReviewNotFoundException;
-import fr.joellehuyen.reflights.exceptions.UserNotFoundException;
 import fr.joellehuyen.reflights.models.*;
 import fr.joellehuyen.reflights.repositories.FlightRepository;
 import fr.joellehuyen.reflights.repositories.ReviewRepository;
