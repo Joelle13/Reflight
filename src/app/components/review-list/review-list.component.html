@@ -15,13 +15,37 @@
   </div>
 </div>
 
-<app-review-search (reviewsFound)="updateReviews($event)" [mode] = "mode"></app-review-search>
+<app-review-search  (reviewsFound)="updateReviews($event)" [mode] = "mode"></app-review-search>
 <div *ngIf="reviews && reviews.length">
   <div *ngFor="let review of reviews">
     <app-review-list-item [review]="review" [mode]="mode" (refresh)="loadReviews()"></app-review-list-item>
   </div>
 </div>
 
-<div *ngIf="!reviews || reviews.length === 0">
-  <p>No reviews available.</p>
+<div class="no-results" *ngIf="!loading && reviews.length === 0">
+  <div class="no-results-content">
+    <div class="no-results-icon">
+      <i class="fa fa-search"></i>
+    </div>
+    <h3 class="no-results-title">Aucun avis trouvé</h3>
+    <p class="no-results-text">
+      Nous n'avons trouvé aucun avis correspondant à vos critères de recherche.
+    </p>
+    <button class="btn-reset" (click)="resetSearch()">
+      <i class="fa fa-rotate-right"></i>
+      Réinitialiser la recherche
+    </button>
+  </div>
+</div>
+
+<!-- Spinner -->
+<div class="spinner-container" *ngIf="loading">
+  <div class="spinner-wrapper">
+    <div class="spinner">
+      <div class="spinner-plane">
+        <i class="fa fa-plane"></i>
+      </div>
+    </div>
+    <p class="spinner-text">Chargement en cours...</p>
+  </div>
 </div>

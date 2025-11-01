@@ -16,7 +16,7 @@ export class ReviewSearchComponent {
   searchKeywordsQuery: string = '';
   filterStatus = '';
   filterAirlines = '';
-  sortBy: SortBy = 'date-desc';
+  sortBy: SortBy = 'DATE-desc';
 
   reviews: Review[] = [];
   reviewCount = 0;
@@ -36,7 +36,6 @@ export class ReviewSearchComponent {
       this.reviews = reviews;
       this.reviewCount = reviews.length;
       this.onSortChange();
-      this.reviewsFound.emit(this.reviews);
     });
   }
 
@@ -73,6 +72,7 @@ export class ReviewSearchComponent {
 
     // Appel backend search
     this.reviewService.searchReviews(criteria).subscribe(reviews => {
+      console.log('searched reviews:', reviews)
       this.reviews = reviews;
       this.reviewCount = reviews.length;
       this.onSortChange();
@@ -81,9 +81,24 @@ export class ReviewSearchComponent {
 
   reload() {
     const criteria = this.lastCriteria || {};
-    this.reviewService.searchReviews(criteria).subscribe(reviews => {
+    this.reviewService.searchReviews(criteria).subscribe(() => {
       this.onSortChange();
-      this.reviewsFound.emit(reviews);
+    });
+  }
+
+  resetSearch() {
+    this.searchFlightQuery = '';
+    this.searchKeywordsQuery = '';
+    this.filterStatus = '';
+    this.filterAirlines = '';
+    this.sortBy = 'DATE-desc';
+    this.lastCriteria = {};
+
+    // reload full list
+    this.reviewService.getAll().subscribe(reviews => {
+      this.reviews = reviews;
+      this.reviewCount = reviews.length;
+      this.onSortChange(); // emit trié
     });
   }
 }
