@@ -1,0 +1,116 @@
+package fr.joellehuyen.reflights.controllers;
+
+import fr.joellehuyen.reflights.dtos.ReviewDto;
+import fr.joellehuyen.reflights.dtos.ReviewResponseDto;
+import fr.joellehuyen.reflights.dtos.ReviewsSortingRequest;
+import fr.joellehuyen.reflights.models.Review;
+import fr.joellehuyen.reflights.services.ReviewService;
+import io.swagger.v3.oas.annotations.Operation;
+import lombok.AllArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RestController
+@RequestMapping("/v1/reviews")
+@AllArgsConstructor
+public class ReviewController {
+
+    private final ReviewService reviewService;
+
+    @Operation(summary = "To get all reviews")
+    @GetMapping
+    public ResponseEntity<List<ReviewResponseDto>> getAllReviews() {
+        List<Review> reviews = reviewService.getAllReviews();
+        List<ReviewResponseDto> reviewDtos = reviews.stream()
+                .map(ReviewResponseDto::mapToDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(reviewDtos);
+    }
+
+    @Operation (summary = "To create a new review")
+    @PostMapping
+    public ResponseEntity<ReviewDto> createReview(@RequestBody ReviewDto review) {
+        Review createdReview = reviewService.createReview(review);
+        ReviewDto responseDto = ReviewDto.mapToDTO(createdReview);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    @Operation (summary = "To answer a review")
+    @PatchMapping("/{id}/response")
+    public ResponseEntity<ReviewResponseDto> answerReview(@PathVariable String id, @RequestBody String answer) {
+        System.out.println("Answer received: " + answer);
+        Review review = reviewService.answerReview(id, answer);
+        ReviewResponseDto responseDto = ReviewResponseDto.mapToDTO(review);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    @Operation (summary = "To reject a review")
+    @PatchMapping("/{id}/reject")
+    public ResponseEntity<ReviewResponseDto> rejectReview(@PathVariable String id) {
+        Review review = reviewService.rejectReview(id);
+        ReviewResponseDto responseDto = ReviewResponseDto.mapToDTO(review);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    @Operation (summary = "To publish a review")
+    @PatchMapping("/{id}/publish")
+    public ResponseEntity<ReviewResponseDto> publishReview(@PathVariable String id) {
+        Review review = reviewService.publishReview(id);
+        ReviewResponseDto responseDto = ReviewResponseDto.mapToDTO(review);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    @Operation (summary = "To search reviews by various criteria")
+    @GetMapping("/search")
+    public ResponseEntity<List<ReviewResponseDto>> searchReviews(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            @RequestParam(required = false) Integer rating,
+            @RequestParam(required = false) String airlineName,
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String flightId,
+            @RequestParam(required = false) String keyword) {
+
+        List<Review> reviews = reviewService.searchReviews(date, rating, airlineName, status, flightId, keyword);
+        List<ReviewResponseDto> reviewDtos = reviews.stream()
+                .map(ReviewResponseDto::mapToDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(reviewDtos);
+    }
+
+    @Operation (summary = "To get a review by its id")
+    @GetMapping("/{id}")
+    public ResponseEntity<ReviewResponseDto> getReviewById(@PathVariable String id) {
+        Review review = reviewService.getReviewById(id);
+        ReviewResponseDto responseDto = ReviewResponseDto.mapToDTO(review);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    @Operation(summary = "To delete a review by its id")
+    @DeleteMapping ("/{id}")
+    public ResponseEntity<?> deleteReviewById(@PathVariable String id) {
+        reviewService.deleteReviewById(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/sorted")
+    public ResponseEntity<List<ReviewResponseDto>> sortedReviews(@RequestBody ReviewsSortingRequest sortRequest) {
+        List<Review> reviews = reviewService.getSortedReviews(sortRequest.getSortBy(), sortRequest.isDesc(), sortRequest.getReviewIds());
+        List<ReviewResponseDto> reviewDtos = reviews.stream()
+                .map(ReviewResponseDto::mapToDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(reviewDtos);
+    }
+
+    @Operation (summary = "To count reviews by flight ID")
+    @GetMapping("/count/flight/{flightId}")
+    public ResponseEntity<Long> countReviewsByFlightId(@PathVariable String flightId) {
+        long count = reviewService.countReviewsByFlightId(flightId);
+        return ResponseEntity.ok(count);
+    }
+
+}
