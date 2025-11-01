@@ -5,6 +5,7 @@ import fr.joellehuyen.reflights.exceptions.AirlineNotFoundException;
 import fr.joellehuyen.reflights.exceptions.FlightNotFoundException;
 import fr.joellehuyen.reflights.models.Airline;
 import fr.joellehuyen.reflights.models.Flight;
+import fr.joellehuyen.reflights.models.SortBy;
 import fr.joellehuyen.reflights.repositories.AirlineRepository;
 import fr.joellehuyen.reflights.repositories.FlightRepository;
 import org.junit.jupiter.api.Test;
@@ -99,7 +100,7 @@ public class FlightServiceImplTest {
         Flight f = sampleFlight("AF123", LocalDate.of(2025,1,1), a);
         given(flightRepository.findAll(Sort.by(Sort.Direction.ASC, "departureDate"))).willReturn(List.of(f));
 
-        List<Flight> res = flightService.getSortedFlights("date", false);
+        List<Flight> res = flightService.getSortedFlights(SortBy.DATE, false);
 
         assertEquals(1, res.size());
     }

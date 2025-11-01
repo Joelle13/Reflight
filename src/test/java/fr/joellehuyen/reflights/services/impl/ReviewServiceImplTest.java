@@ -152,7 +152,7 @@ public class ReviewServiceImplTest {
         given(reviewRepository.findAllById(reviewIds, sort))
                 .willReturn(List.of(r));
         // when
-        List<Review> res = reviewService.getSortedReviews("date", false, reviewIds);
+        List<Review> res = reviewService.getSortedReviews(SortBy.DATE, false, reviewIds);
         // then
         assertEquals(1, res.size());
     }
