@@ -16,7 +16,7 @@ export class ReviewSearchComponent {
   searchKeywordsQuery: string = '';
   filterStatus = '';
   filterAirlines = '';
-  sortBy: SortBy = 'date-desc';
+  sortBy: SortBy = 'DATE-desc';
 
   reviews: Review[] = [];
   reviewCount = 0;
@@ -91,7 +91,7 @@ export class ReviewSearchComponent {
     this.searchKeywordsQuery = '';
     this.filterStatus = '';
     this.filterAirlines = '';
-    this.sortBy = 'date-desc';
+    this.sortBy = 'DATE-desc';
     this.lastCriteria = {};
 
     // reload full list

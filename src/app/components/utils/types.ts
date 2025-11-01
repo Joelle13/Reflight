@@ -1,7 +1,7 @@
 export type Mode = 'user' | 'admin';
 export type SortBy =
-  | 'date-desc'
-  | 'date-asc'
-  | 'rating-desc'
-  | 'rating-asc'
-  | 'airline';
+  | 'DATE-desc'
+  | 'DATE-asc'
+  | 'RATING-desc'
+  | 'RATING-asc'
+  | 'AIRLINE';
