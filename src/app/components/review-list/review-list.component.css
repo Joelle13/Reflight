@@ -98,6 +98,87 @@ input:focus + .slider {
     transform: translateX(0);
   }
 }
+/* Container du spinner */
+.spinner-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(248, 249, 250, 0.95);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Wrapper central */
+.spinner-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Spinner principal */
+.spinner {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Cercle externe animé */
+.spinner::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 4px solid #e9ecef;
+  border-top-color: #e31837;
+  border-right-color: #0066cc;
+  border-radius: 50%;
+  animation: spinRotate 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+}
+
+/* Cercle interne animé */
+.spinner::after {
+  content: '';
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  border: 4px solid transparent;
+  border-left-color: #0066cc;
+  border-bottom-color: #e31837;
+  border-radius: 50%;
+  animation: spinRotate 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite reverse;
+}
+
+/* Icône avion au centre */
+.spinner-plane {
+  position: relative;
+  z-index: 1;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #0066cc, #0052a3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+  animation: planePulse 1.5s ease-in-out infinite;
+}
+
+.spinner-plane i {
+  color: white;
+  font-size: 1.5rem;
+  animation: planeMove 2s ease-in-out infinite;
+}
+
 /* Texte de chargement */
 .spinner-text {
   font-family: 'Rubik', sans-serif;
