@@ -58,6 +58,8 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public List<Review> searchReviews(LocalDate date, Integer rating, String airlineName, String status, String flightId, String keyword) {
+        log.info("searchReviews date: {}, rating: {}, airlineName: {}, status: {}, flightId: {}, keyword: {}",
+                date, rating, airlineName, status, flightId, keyword);
         ReviewStatus reviewStatus = null;
         if (status != null) {
             reviewStatus = ReviewStatus.valueOf(status.toUpperCase());

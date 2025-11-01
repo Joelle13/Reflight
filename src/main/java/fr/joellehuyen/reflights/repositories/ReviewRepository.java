@@ -23,7 +23,7 @@ WHERE r.reviewDate = COALESCE(:date, r.reviewDate)
   AND r.rating     = COALESCE(:rating, r.rating)
   AND a.name = COALESCE(:airlineName, a.name)
   AND r.status      = COALESCE(:status, r.status)
-  AND f.id          = COALESCE(:flightId, f.id)
+  AND (f.id)          LIKE COALESCE(CONCAT('%', :flightId, '%'), f.id)
   AND LOWER(r.comments) LIKE COALESCE(CONCAT('%', LOWER(:keyword), '%'), LOWER(r.comments))
 """)
     List<Review> searchReviews(LocalDate date, Integer rating, String airlineName, ReviewStatus status, String flightId, String keyword);

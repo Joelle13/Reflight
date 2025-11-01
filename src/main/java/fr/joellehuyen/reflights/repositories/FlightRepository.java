@@ -15,7 +15,7 @@ public interface FlightRepository extends JpaRepository<Flight,String> {
         JOIN f.airline a
         WHERE f.departureDate = COALESCE(:date, f.departureDate)
         AND a.name          = COALESCE(:airline, a.name)
-        AND f.id            = COALESCE(:number, f.id)
+        AND (f.id)          LIKE COALESCE(CONCAT('%', :number, '%'), f.id)
     """)
     List<Flight> searchFlights(LocalDate date, String airline, String number);
 }
