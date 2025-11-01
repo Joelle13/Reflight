@@ -3,10 +3,7 @@ package fr.joellehuyen.reflights.services.impl;
 import fr.joellehuyen.reflights.dtos.ReviewDto;
 import fr.joellehuyen.reflights.exceptions.ReviewAlreadyExistException;
 import fr.joellehuyen.reflights.exceptions.ReviewNotFoundException;
-import fr.joellehuyen.reflights.models.Flight;
-import fr.joellehuyen.reflights.models.Review;
-import fr.joellehuyen.reflights.models.ReviewStatus;
-import fr.joellehuyen.reflights.models.User;
+import fr.joellehuyen.reflights.models.*;
 import fr.joellehuyen.reflights.repositories.ReviewRepository;
 import fr.joellehuyen.reflights.services.FlightService;
 import fr.joellehuyen.reflights.services.ReviewService;
@@ -89,7 +86,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> getSortedReviews(String sortBy, boolean desc, List<String> reviewIds) {
+    public List<Review> getSortedReviews(SortBy sortBy, boolean desc, List<String> reviewIds) {
         Sort sort = buildSort(sortBy, desc);
         return reviewRepository.findAllById(reviewIds, sort);
 
@@ -122,14 +119,14 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewRepository.save(review);
     }
 
-    private Sort buildSort(String sortBy, boolean desc) {
+    private Sort buildSort(SortBy sortBy, boolean desc) {
         log.info("sortBy {} desc ? {}", sortBy, desc);
         Sort.Direction direction = desc ? Sort.Direction.DESC : Sort.Direction.ASC;
         return switch (sortBy) {
-            case "date" -> Sort.by(direction, "reviewDate");
-            case "rating" -> Sort.by(direction, "rating");
-            case "airline" -> Sort.by(direction, "flight.airline.name");
-            case "status" -> Sort.by(direction, "status");
+            case SortBy.DATE -> Sort.by(direction, "reviewDate");
+            case SortBy.RATING -> Sort.by(direction, "rating");
+            case SortBy.AIRLINE -> Sort.by(direction, "flight.airline.name");
+            case SortBy.STATUS -> Sort.by(direction, "status");
             default -> Sort.by(Sort.Direction.ASC, "reviewDate");
         };
     }

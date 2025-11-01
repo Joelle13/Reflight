@@ -3,6 +3,7 @@ package fr.joellehuyen.reflights.controllers;
 import fr.joellehuyen.reflights.dtos.FlightDto;
 import fr.joellehuyen.reflights.dtos.RequestFlightDto;
 import fr.joellehuyen.reflights.models.Flight;
+import fr.joellehuyen.reflights.models.SortBy;
 import fr.joellehuyen.reflights.services.FlightService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
@@ -59,7 +60,7 @@ public class FlightController {
     @Operation (summary = "Get sorted flights", description = "Retrieve a list of flights sorted by the specified attribute")
     @GetMapping("/sorted")
     public ResponseEntity<List<FlightDto>> sortedFlights(
-            @RequestParam String sortBy,
+            @RequestParam SortBy sortBy,
             @RequestParam boolean desc
     ) {
         List<Flight> flights = flightService.getSortedFlights(sortBy, desc);

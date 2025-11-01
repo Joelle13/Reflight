@@ -5,6 +5,7 @@ import fr.joellehuyen.reflights.exceptions.AirlineNotFoundException;
 import fr.joellehuyen.reflights.exceptions.FlightNotFoundException;
 import fr.joellehuyen.reflights.models.Airline;
 import fr.joellehuyen.reflights.models.Flight;
+import fr.joellehuyen.reflights.models.SortBy;
 import fr.joellehuyen.reflights.repositories.AirlineRepository;
 import fr.joellehuyen.reflights.repositories.FlightRepository;
 import fr.joellehuyen.reflights.services.FlightService;
@@ -55,7 +56,7 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public List<Flight> getSortedFlights(String sortBy, boolean desc) {
+    public List<Flight> getSortedFlights(SortBy sortBy, boolean desc) {
         Sort sort = buildSort(sortBy, desc);
         return flightRepository.findAll(sort);
     }
@@ -70,13 +71,13 @@ public class FlightServiceImpl implements FlightService {
         flightRepository.delete(flight);
     }
 
-    private Sort buildSort(String sortBy, boolean desc) {
+    private Sort buildSort(SortBy sortBy, boolean desc) {
         log.info("sort by {} desc ? {}", sortBy, desc);
         Sort.Direction direction = desc ? Sort.Direction.DESC : Sort.Direction.ASC;
         return switch (sortBy) {
-            case "date" -> Sort.by(direction, "departureDate");
-            case "airline" -> Sort.by(direction, "airline.name");
-            case "flightNumber" -> Sort.by(direction, "id");
+            case SortBy.DATE -> Sort.by(direction, "departureDate");
+            case SortBy.AIRLINE -> Sort.by(direction, "airline.name");
+            case SortBy.FLIGHT_NUMBER -> Sort.by(direction, "id");
             default -> Sort.by(Sort.Direction.ASC, "departureDate");
         };
     }

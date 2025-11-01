@@ -2,6 +2,7 @@ package fr.joellehuyen.reflights.services;
 
 import fr.joellehuyen.reflights.dtos.ReviewDto;
 import fr.joellehuyen.reflights.models.Review;
+import fr.joellehuyen.reflights.models.SortBy;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,7 +20,7 @@ public interface ReviewService {
 
     void deleteReviewById(String id);
 
-    List<Review> getSortedReviews(String sortBy, boolean desc, List<String> reviewIds);
+    List<Review> getSortedReviews(SortBy sortBy, boolean desc, List<String> reviewIds);
 
     long countReviewsByFlightId(String flightId);
 
