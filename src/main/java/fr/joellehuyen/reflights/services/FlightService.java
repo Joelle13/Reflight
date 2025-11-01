@@ -16,5 +16,4 @@ public interface FlightService {
 
     void deleteFlightById(String id);
 
-    Flight findById(String upperCase);
 }

@@ -9,6 +9,7 @@ import fr.joellehuyen.reflights.repositories.AirlineRepository;
 import fr.joellehuyen.reflights.repositories.FlightRepository;
 import fr.joellehuyen.reflights.services.FlightService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class FlightServiceImpl implements FlightService {
 
     private FlightRepository flightRepository;
@@ -32,6 +34,7 @@ public class FlightServiceImpl implements FlightService {
         Airline airline = airlineRepository.findById(flightDto.getAirlineId())
                 .orElseThrow(() -> new AirlineNotFoundException(flightDto.getAirlineId()));
         Flight flight = RequestFlightDto.mapToEntity(flightDto, airline);
+        log.info("flight created {}", flight);
         return flightRepository.save(flight);
     }
 
@@ -45,7 +48,10 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public Flight getFlightByFlightNumber(String flightNumber) {
         return flightRepository.findById(flightNumber.toUpperCase())
-                .orElseThrow(() -> new FlightNotFoundException(flightNumber));
+                .orElseThrow(() -> {
+                    log.error("Flight with number {} not found", flightNumber);
+                    return new FlightNotFoundException(flightNumber);
+                });
     }
 
     @Override
@@ -57,17 +63,15 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public void deleteFlightById(String id) {
         Flight flight = flightRepository.findById(id)
-                .orElseThrow(() -> new FlightNotFoundException(id));
+                .orElseThrow(() -> {
+                    log.error("Flight with number {} not found", id);
+                    return new FlightNotFoundException(id);
+                });
         flightRepository.delete(flight);
     }
 
-    @Override
-    public Flight findById(String id) {
-        return flightRepository.findById(id)
-                .orElseThrow(() -> new FlightNotFoundException(id));
-    }
-
     private Sort buildSort(String sortBy, boolean desc) {
+        log.info("sort by {} desc ? {}", sortBy, desc);
         Sort.Direction direction = desc ? Sort.Direction.DESC : Sort.Direction.ASC;
         return switch (sortBy) {
             case "date" -> Sort.by(direction, "departureDate");

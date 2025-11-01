@@ -12,6 +12,7 @@ import fr.joellehuyen.reflights.services.FlightService;
 import fr.joellehuyen.reflights.services.ReviewService;
 import fr.joellehuyen.reflights.services.UserService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ReviewServiceImpl implements ReviewService {
 
     private  final ReviewRepository reviewRepository;
@@ -34,11 +36,13 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public Review createReview(ReviewDto review) {
         User user = userService.findById(review.getUserId());
-        Flight flight = flightService.findById(review.getFlightId().toUpperCase());
+        Flight flight = flightService.getFlightByFlightNumber(review.getFlightId().toUpperCase());
         if (reviewRepository.findByUser_idAndFlight_id(user.getId(), flight.getId()).isPresent()) {
+            log.error("Review already exist");
             throw new ReviewAlreadyExistException(user, flight.getId());
         }
         Review newReview = new Review(user, flight, review.getRating(), review.getComments());
+        log.info("Review created {}", newReview);
         return reviewRepository.save(newReview);
     }
 
@@ -48,6 +52,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .orElseThrow(() -> new ReviewNotFoundException(id));
         review.setResponse(answer);
         review.setStatus(ReviewStatus.PROCESSED);
+        log.info("Review's new response {}", review.getResponse());
         return reviewRepository.save(review);
     }
 
@@ -69,8 +74,10 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Review getReviewById(String id) {
-        return reviewRepository.findById(id)
-                .orElseThrow(() -> new ReviewNotFoundException(id));
+        return reviewRepository.findById(id).orElseThrow(() -> {
+            log.error("Review with number {} not found", id);
+            return new ReviewNotFoundException(id);
+        });
     }
 
     @Override
@@ -94,7 +101,10 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public Review rejectReview(String id) {
         Review review = reviewRepository.findById(id)
-                .orElseThrow(() -> new ReviewNotFoundException(id));
+                .orElseThrow(() -> {
+                    log.error("Review with number {} not found", id);
+                    return new ReviewNotFoundException(id);
+                });
         review.setStatus(ReviewStatus.REJECTED);
         return reviewRepository.save(review);
     }
@@ -102,12 +112,16 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public Review publishReview(String id) {
         Review review = reviewRepository.findById(id)
-                .orElseThrow(() -> new ReviewNotFoundException(id));
+                .orElseThrow(() -> {
+                    log.error("Review with number {} not found", id);
+                    return new ReviewNotFoundException(id);
+                });
         review.setStatus(ReviewStatus.PUBLISHED);
         return reviewRepository.save(review);
     }
 
     private Sort buildSort(String sortBy, boolean desc) {
+        log.info("sortBy {} desc ? {}", sortBy, desc);
         Sort.Direction direction = desc ? Sort.Direction.DESC : Sort.Direction.ASC;
         return switch (sortBy) {
             case "date" -> Sort.by(direction, "reviewDate");

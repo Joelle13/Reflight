@@ -6,12 +6,14 @@ import fr.joellehuyen.reflights.models.User;
 import fr.joellehuyen.reflights.repositories.UserRepository;
 import fr.joellehuyen.reflights.services.UserService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
@@ -28,18 +30,25 @@ public class UserServiceImpl implements UserService {
         newUser.setFirstName(user.getFirstName());
         newUser.setLastName(user.getLastName());
         newUser.setEmail(user.getEmail());
+        log.info("Creating user: {} {}", user.getFirstName(), user.getLastName());
         return userRepository.save(newUser);
     }
 
     @Override
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException(email));
+                .orElseThrow(() -> {
+                    log.error("User with email {} not found", email);
+                    return new UserNotFoundException(email);
+                });
     }
 
     @Override
     public User findById(String userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException(userId));
+                .orElseThrow(() -> {
+                    log.error("User with id {} not found", userId);
+                    return new UserNotFoundException(userId);
+                });
     }
 }
