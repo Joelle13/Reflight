@@ -20,9 +20,11 @@ export class ReviewService extends BaseService<Review, ReviewCreateInput>{
 
   }
 
-  sortReviews(sortValue: string, desc: boolean) {
-    return this.http.get<Review[]>(`${this.reviewsUrl}/sorted`, { params: { sortBy: sortValue, desc: desc } });
+  sortReviews(sortBy: string, desc: boolean, reviewIds: string[]) {
+    const body = { sortBy, desc, reviewIds: reviewIds };
+    return this.http.post<Review[]>(`${this.reviewsUrl}/sorted`, body );
   }
+
 
   //envoie les données en brut plutôt que d'envoyer un body (sinon mauvais affichage)
   answerReview(id: string, response: string) {

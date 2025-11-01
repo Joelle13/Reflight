@@ -32,8 +32,12 @@ export class ReviewSearchComponent {
     this.airlineService.getAll().subscribe(airlines => {
       this.airlines = airlines;
     })
-    this.loadReviews();
-    this.onSortChange();
+    this.reviewService.getAll().subscribe(reviews => {
+      this.reviews = reviews;
+      this.reviewCount = reviews.length;
+      this.onSortChange();
+      this.reviewsFound.emit(this.reviews);
+    });
   }
 
   onSearchReviews() {
@@ -50,7 +54,9 @@ export class ReviewSearchComponent {
     if(sortDirection === 'desc') {
       desc = true;
     }
-    this.reviewService.sortReviews(sortField, desc).subscribe(sorted => {
+    let reviewIds: string[] = [];
+    this.reviews.forEach(r => reviewIds.push(r.id));
+    this.reviewService.sortReviews(sortField, desc, reviewIds).subscribe(sorted => {
       this.reviews = sorted;
       this.reviewsFound.emit(this.reviews);
     });
@@ -69,14 +75,14 @@ export class ReviewSearchComponent {
     this.reviewService.searchReviews(criteria).subscribe(reviews => {
       this.reviews = reviews;
       this.reviewCount = reviews.length;
-      this.reviewsFound.emit(this.reviews);
-
+      this.onSortChange();
     });
   }
 
   reload() {
     const criteria = this.lastCriteria || {};
     this.reviewService.searchReviews(criteria).subscribe(reviews => {
+      this.onSortChange();
       this.reviewsFound.emit(reviews);
     });
   }
