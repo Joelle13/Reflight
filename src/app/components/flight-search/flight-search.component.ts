@@ -70,4 +70,11 @@ export class FlightSearchComponent {
     }
     );
   }
+
+  resetSearch() {
+    this.flightNumber = '';
+    this.airline = '';
+    this.date = '';
+    this.onSearch();
+  }
 }

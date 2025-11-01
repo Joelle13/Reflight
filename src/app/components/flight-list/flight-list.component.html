@@ -5,6 +5,30 @@
   </div>
 </div>
 
-<div *ngIf="!flights || flights.length === 0">
-  <p>Aucun vol pour cette recherche !</p>
+<div class="no-results" *ngIf="!loading && flights.length === 0">
+  <div class="no-results-content">
+    <div class="no-results-icon">
+      <i class="fa fa-search"></i>
+    </div>
+    <h3 class="no-results-title">Aucun vol trouvé</h3>
+    <p class="no-results-text">
+      Nous n'avons trouvé aucun vol correspondant à vos critères de recherche.
+    </p>
+    <button class="btn-reset" (click)="resetSearch()">
+      <i class="fa fa-rotate-right"></i>
+      Réinitialiser la recherche
+    </button>
+  </div>
+</div>
+
+<!-- Spinner -->
+<div class="spinner-container" *ngIf="loading">
+  <div class="spinner-wrapper">
+    <div class="spinner">
+      <div class="spinner-plane">
+        <i class="fa fa-plane"></i>
+      </div>
+    </div>
+    <p class="spinner-text">Chargement en cours...</p>
+  </div>
 </div>
