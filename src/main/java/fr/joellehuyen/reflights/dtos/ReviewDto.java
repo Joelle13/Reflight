@@ -3,7 +3,6 @@ package fr.joellehuyen.reflights.dtos;
 import fr.joellehuyen.reflights.models.Review;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 @Builder

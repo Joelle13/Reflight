@@ -3,7 +3,8 @@ package fr.joellehuyen.reflights.dtos;
 import fr.joellehuyen.reflights.models.Flight;
 import fr.joellehuyen.reflights.models.Review;
 import fr.joellehuyen.reflights.models.User;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
 
 import java.time.LocalDate;
 

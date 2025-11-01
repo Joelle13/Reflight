@@ -5,9 +5,9 @@ import fr.joellehuyen.reflights.dtos.UserDto;
 import fr.joellehuyen.reflights.models.User;
 import fr.joellehuyen.reflights.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.web.bind.annotation.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 

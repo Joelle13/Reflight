@@ -6,7 +6,6 @@ import fr.joellehuyen.reflights.dtos.ReviewsSortingRequest;
 import fr.joellehuyen.reflights.models.Review;
 import fr.joellehuyen.reflights.services.ReviewService;
 import io.swagger.v3.oas.annotations.Operation;
-
 import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,8 @@
 package fr.joellehuyen.reflights.dtos;
 
 import fr.joellehuyen.reflights.models.User;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
 
 
 @Getter
