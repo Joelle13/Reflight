@@ -2,6 +2,7 @@ package fr.joellehuyen.AirFrance_FlightReviews.controllers;
 
 import fr.joellehuyen.AirFrance_FlightReviews.dtos.ReviewDto;
 import fr.joellehuyen.AirFrance_FlightReviews.dtos.ReviewResponseDto;
+import fr.joellehuyen.AirFrance_FlightReviews.dtos.ReviewsSortingRequest;
 import fr.joellehuyen.AirFrance_FlightReviews.models.Review;
 import fr.joellehuyen.AirFrance_FlightReviews.services.ReviewService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -97,12 +98,9 @@ public class ReviewController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/sorted")
-    public ResponseEntity<List<ReviewResponseDto>> sortedReviews(
-            @RequestParam String sortBy,
-            @RequestParam boolean desc
-    ) {
-        List<Review> reviews = reviewService.getSortedReviews(sortBy, desc);
+    @PostMapping("/sorted")
+    public ResponseEntity<List<ReviewResponseDto>> sortedReviews(@RequestBody ReviewsSortingRequest sortRequest) {
+        List<Review> reviews = reviewService.getSortedReviews(sortRequest.getSortBy(), sortRequest.isDesc(), sortRequest.getReviewIds());
         List<ReviewResponseDto> reviewDtos = reviews.stream()
                 .map(ReviewResponseDto::mapToDTO)
                 .collect(Collectors.toList());

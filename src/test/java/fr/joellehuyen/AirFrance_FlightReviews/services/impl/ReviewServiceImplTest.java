@@ -148,11 +148,16 @@ public class ReviewServiceImplTest {
 
     @Test
     void shouldGetSortedReviews_mapSort() {
-        Review r = new Review(); r.setId("r1");
-        given(reviewRepository.findAll(Sort.by(Sort.Direction.ASC, "reviewDate"))).willReturn(List.of(r));
-
-        List<Review> res = reviewService.getSortedReviews("date", false);
-
+        // given
+        Review r = new Review();
+        r.setId("r1");
+        List<String> reviewIds = List.of("r1");
+        Sort sort = Sort.by(Sort.Direction.ASC, "reviewDate"); // selon ton mapping "date" → "createdAt"
+        given(reviewRepository.findAllById(reviewIds, sort))
+                .willReturn(List.of(r));
+        // when
+        List<Review> res = reviewService.getSortedReviews("date", false, reviewIds);
+        // then
         assertEquals(1, res.size());
     }
 

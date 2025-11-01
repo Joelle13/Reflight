@@ -2,6 +2,7 @@ package fr.joellehuyen.AirFrance_FlightReviews.repositories;
 
 import fr.joellehuyen.AirFrance_FlightReviews.models.Review;
 import fr.joellehuyen.AirFrance_FlightReviews.models.ReviewStatus;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -36,4 +37,11 @@ WHERE r.reviewDate = COALESCE(:date, r.reviewDate)
     long countByFlight_FlightId(String flightId);
 
     Optional<Review> findByUser_idAndFlight_id(String userId, String flightId);
+
+    @Query ("""
+        SELECT r
+        FROM Review r
+        WHERE r.id IN :reviewIds
+    """)
+    List<Review> findAllById(List<String> reviewIds, Sort sort);
 }
