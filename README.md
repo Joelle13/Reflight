@@ -1,6 +1,6 @@
-# 📌 Project: Reflight – Flight reviews platform
+# 📌 Project: Reflights – Flight reviews platform
 
-**Reflight** is a full-stack web application designed to publish flight reviews and manage them as an administrator.
+**Reflights** is a full-stack web application designed to publish flight reviews and manage them as an administrator.
 
 ---
 
