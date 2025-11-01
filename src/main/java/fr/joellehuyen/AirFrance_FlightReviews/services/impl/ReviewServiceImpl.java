@@ -84,9 +84,9 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> getSortedReviews(String sortBy, boolean desc) {
+    public List<Review> getSortedReviews(String sortBy, boolean desc, List<String> reviewIds) {
         Sort sort = buildSort(sortBy, desc);
-        return reviewRepository.findAll(sort);
+        return reviewRepository.findAllById(reviewIds, sort);
 
     }
 
@@ -116,7 +116,7 @@ public class ReviewServiceImpl implements ReviewService {
         return switch (sortBy) {
             case "date" -> Sort.by(direction, "reviewDate");
             case "rating" -> Sort.by(direction, "rating");
-            case "airline" -> Sort.by(direction, "flight.airlineName");
+            case "airline" -> Sort.by(direction, "flight.airline.name");
             case "status" -> Sort.by(direction, "status");
             default -> Sort.by(Sort.Direction.ASC, "reviewDate");
         };
