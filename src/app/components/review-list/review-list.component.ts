@@ -20,15 +20,16 @@ export class ReviewListComponent {
   ngOnInit(): void {
     this.reviewService.getAll().subscribe(reviews => {
       this.reviews = reviews;
-    })
+    });
   }
 
   onToggleMode(checked: boolean) {
     this.mode = checked ? 'admin' : 'user';
-    console.log(this.mode);
+    this.reviewSearch.resetSearch();
   }
 
   updateReviews(newReviews: Review[]) {
+    console.log('Updating reviews in ReviewListComponent:', newReviews);
     this.reviews = newReviews;
   }
 

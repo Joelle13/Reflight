@@ -15,7 +15,7 @@
   </div>
 </div>
 
-<app-review-search (reviewsFound)="updateReviews($event)" [mode] = "mode"></app-review-search>
+<app-review-search  (reviewsFound)="updateReviews($event)" [mode] = "mode"></app-review-search>
 <div *ngIf="reviews && reviews.length">
   <div *ngFor="let review of reviews">
     <app-review-list-item [review]="review" [mode]="mode" (refresh)="loadReviews()"></app-review-list-item>
@@ -23,5 +23,6 @@
 </div>
 
 <div *ngIf="!reviews || reviews.length === 0">
+  <p>{{reviews.length}}</p>
   <p>Aucun avis pour cette recherche !</p>
 </div>
