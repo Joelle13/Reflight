@@ -1,10 +1,10 @@
 package fr.joellehuyen.reflights.services.impl;
 
 import fr.joellehuyen.reflights.exceptions.ReviewNotFoundException;
-import fr.joellehuyen.reflights.models.*;
-import fr.joellehuyen.reflights.repositories.FlightRepository;
+import fr.joellehuyen.reflights.models.Review;
+import fr.joellehuyen.reflights.models.ReviewStatus;
+import fr.joellehuyen.reflights.models.SortBy;
 import fr.joellehuyen.reflights.repositories.ReviewRepository;
-import fr.joellehuyen.reflights.repositories.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
