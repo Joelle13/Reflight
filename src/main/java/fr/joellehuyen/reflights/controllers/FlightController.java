@@ -51,10 +51,6 @@ public class FlightController {
             @RequestParam(required = false) String number) {
 
         List<Flight> results = flightService.searchFlights(date, airline, number);
-
-        if (results.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
         List<FlightDto> flightDtos = results.stream()
                 .map(FlightDto::mapToDTO)
                 .toList();
