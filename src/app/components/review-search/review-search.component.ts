@@ -81,7 +81,7 @@ export class ReviewSearchComponent {
 
   reload() {
     const criteria = this.lastCriteria || {};
-    this.reviewService.searchReviews(criteria).subscribe(reviews => {
+    this.reviewService.searchReviews(criteria).subscribe(() => {
       this.onSortChange();
     });
   }
