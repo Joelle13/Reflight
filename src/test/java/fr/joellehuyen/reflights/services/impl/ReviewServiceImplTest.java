@@ -25,29 +25,8 @@ public class ReviewServiceImplTest {
     @Mock
     private ReviewRepository reviewRepository;
 
-    @Mock
-    private UserRepository userRepository;
-
-    @Mock
-    private FlightRepository flightRepository;
-
     @InjectMocks
     private ReviewServiceImpl reviewService;
-
-    private User sampleUser() {
-        User u = new User();
-        u.setId("u1");
-        u.setEmail("user@example.com");
-        u.setFirstName("First");
-        u.setLastName("Last");
-        return u;
-    }
-
-    private Flight sampleFlight() {
-        Airline a = new Airline(); a.setId("AF"); a.setName("AIR FRANCE");
-        Flight f = new Flight(); f.setId("AF123"); f.setAirline(a); f.setDepartureDate(LocalDate.of(2025,1,1));
-        return f;
-    }
 
     @Test
     void shouldReturnAllReviews() {
