@@ -25,19 +25,6 @@ public class RequestFlightDto {
     private LocalTime arrivalTime;
     private String airlineId;
 
-    public static RequestFlightDto mapToDTO(Flight flight) {
-        return RequestFlightDto.builder()
-                .id(flight.getId())
-                .departureAirport(flight.getDepartureAirport())
-                .arrivalAirport(flight.getArrivalAirport())
-                .departureDate(flight.getDepartureDate())
-                .arrivalDate(flight.getArrivalDate())
-                .departureTime(flight.getDepartureTime())
-                .arrivalTime(flight.getArrivalTime())
-                .airlineId(flight.getAirline().getId())
-                .build();
-    }
-
     public static Flight mapToEntity(RequestFlightDto flightDto, Airline airline) {
         Flight flight = new Flight();
         flight.setId(flightDto.getId().toUpperCase());
